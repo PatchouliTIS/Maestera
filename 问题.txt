@@ -1,0 +1,69 @@
+不好意思打扰你一下  还是想请教一下复试的问题。想麻烦你详细说明一下在复试项目这块
+具体是准备到何种程度……比如是用C#/cpp项目包装并实现之前在本科期间所做的某种工程应
+用?还是仅仅就把自己的本科期间所完成的东西往简历上一摆然后自己开始主攻复试机试、笔
+试这类的（如果可以的话还想请你说一说你本科期间都参加过哪些跟CS相关的比赛或者作品之类）。
+我想趁着进入暑假强化阶段之前做一做那种可以放到复试简历上的那种项目。我自己从3月份就开始坚持每天刷LC和
+PAT，算法题手感还行，就是一直没动手写过实际的应用。
+
+
+
+
+
+
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}",
+                "E:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++",
+                "E:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32",
+                "E:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward",
+                "E:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include",
+                "E:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed",
+                "E:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "8.1",
+            "compilerPath": "D:/VS15_x64/VS15_x64/VC/bin/cl.exe",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64"
+        }
+    ],
+    "version": 4
+}
+
+
+
+
+
+
+    "files.associations": {
+      "iostream": "cpp",
+      "fstream": "cpp",
+      "*.tcc": "cpp",
+      "ostream": "cpp"
+    },
+    "C_Cpp.intelliSenseEngine": "Tag Parser",
+    "code-runner.runInTerminal": true,
+    "C_Cpp.intelliSenseEngineFallback": "Enabled",
+    "background.customImages": [
+      "file:///E:/军品造型/JSOC-陆军游骑兵/杂项豆知识/MIB.jpg"
+    ],
+    "background.style": {
+
+      "content": "''",
+      "pointer-events": "none",
+      "position": "absolute",
+      "z-index": "99999",
+      "width": "100%",
+      "height": "100%",
+      "background-position": "center",
+      "background-repeat": "no-repeat",
+      "opacity": 0.1
+    },

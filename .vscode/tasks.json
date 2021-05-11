@@ -1,0 +1,28 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: g++.exe 生成活动文件",
+			"command": "E:\\MinGW\\mingw64\\bin\\g++.exe",
+			"args": [
+				"-g",
+				"./EmployeeManageSys/main.cpp",
+				"./EmployeeManageSys/workerManager.cpp",
+				"./EmployeeManageSys/employee.cpp",
+				"./EmployeeManageSys/boss.cpp",
+				"./EmployeeManageSys/manager.cpp",
+				"-o",
+				"${workspaceFolder}\\EmployeeManageSys\\test.exe"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "编译器: E:\\MinGW\\mingw64\\bin\\g++.exe"
+		}
+	]
+}
