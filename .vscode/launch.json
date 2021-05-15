@@ -8,10 +8,10 @@
             "name": "cl.exe - 生成和调试活动文件",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/EmployeeManageSys/test.exe",
+            "program": "${workspaceFolder}/out/test.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}\\out",
             "environment": [],
             "console": "externalTerminal",
             "preLaunchTask": "C/C++: g++.exe 生成活动文件"

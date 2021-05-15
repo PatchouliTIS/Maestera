@@ -3,13 +3,15 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}",
+                "${workspaceFolder}/**",
+                "${workspaceFolder}\\header\\**",
                 "E:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++",
                 "E:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32",
                 "E:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward",
                 "E:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include",
                 "E:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed",
                 "E:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"
+                
             ],
             "defines": [
                 "_DEBUG",

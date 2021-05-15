@@ -7,7 +7,7 @@
 #include "employee.h"
 #include "manager.h"
 #include "boss.h"
-#define FNAME "./EmployeeManageSys/empFile.txt"
+#define FNAME "C:/Users/ASUS/Desktop/VMshare/out/empFile.txt"
 using namespace std;
 //声明一个管理类，用于管理、显示职工信息
 class workerManager
