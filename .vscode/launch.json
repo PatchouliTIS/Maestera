@@ -8,7 +8,7 @@
             "name": "cl.exe - 生成和调试活动文件",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/out/test.exe",
+            "program": "${workspaceFolder}/out/AT.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

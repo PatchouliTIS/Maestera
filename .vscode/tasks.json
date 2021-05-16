@@ -7,15 +7,11 @@
 			"command": "E:\\MinGW\\mingw64\\bin\\g++.exe",
 			"args": [
 				"-g",
-				"./src/EmployeeManageSys/main.cpp",
-				"./src/EmployeeManageSys/workerManager.cpp",
-				"./src/EmployeeManageSys/employee.cpp",
-				"./src/EmployeeManageSys/boss.cpp",
-				"./src/EmployeeManageSys/manager.cpp",
+				"./src/ArrTemplate/main.cpp",
 				"-I",
 				"C:/Users/ASUS/Desktop/VMshare/header",
 				"-o",
-				"${workspaceFolder}\\out\\test.exe"
+				"${workspaceFolder}\\out\\AT.exe"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"

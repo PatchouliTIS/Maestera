@@ -24,7 +24,16 @@
       "iostream": "cpp",
       "fstream": "cpp",
       "*.tcc": "cpp",
-      "ostream": "cpp"
+      "ostream": "cpp",
+      "array": "cpp",
+      "deque": "cpp",
+      "list": "cpp",
+      "vector": "cpp",
+      "xhash": "cpp",
+      "xmemory0": "cpp",
+      "xstring": "cpp",
+      "xtree": "cpp",
+      "string_view": "cpp"
     },
     "C_Cpp.intelliSenseEngine": "Tag Parser",
     "code-runner.runInTerminal": true,
