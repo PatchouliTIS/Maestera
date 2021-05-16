@@ -32,5 +32,6 @@
 *.app
 
 #files
-/out/
+out/*
+
 
