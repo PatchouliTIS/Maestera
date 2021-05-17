@@ -436,3 +436,241 @@ void printInfo(Person<T1,T2> &P)
 
 
 ```
+
+
+# 7. STL标准库的使用
+`#include<bits/stdc++.h>`
+## 7.1. vector容器
+`#include<vector>`
+
+vector容器和**数组**非常相似，被称为**单端数组**；
+
+普通数组是**静态存储**，而vector可以**动态扩展**；（类比堆区、栈区存储）
+
+**动态扩展**：
+- 是指不直接在原有空间后开辟新空间，而是直接额外开辟一整块区域，复制原有数据（类似深拷贝）
+- vector容器迭代器iterator支持**随机访问**（it+3;it+4;等操作跳跃访问）
+
+原理上是属于**模板类**，类名是vector
+
+### 7.1.1 迭代器的使用
+vector的迭代器可以随机访问
+```c++
+//使用迭代器遍历vector容器
+vector<int> v;
+vector<int>::iterator itBegin = v.begin();      //*.begin()指向容器中第一个元素
+vector<int>::iterator itEnd = v.end();          //*.end()指向容器最后一个元素的后一个位置
+
+for(;itBegin!=itEnd;itBegin++)
+{
+    cout<<*itBegin<<" ";                        //迭代器本质为指针，取得其指向的数据需要解引用
+}
+```
+
+### 7.1.2 构造函数
+- vector<T> v
+  
+  类模板初始化容器
+
+- vector<...> v(int n,int val)
+
+    n个val初始化容器，当val缺失时自动赋值0
+
+- vector<...> v(vc.begin(),vc.end())
+  
+  区间访问方式构造容器，左边闭区间右边开区间        [begin,end)
+
+- vector<...> v(const vector<...>& vc)
+  
+  拷贝构造函数
+
+
+
+### 7.1.3 vector赋值函数
+两种方法：
+1. 重载运算符=
+   - vector& operator=(const vector& v)
+2. 成员函数assign()
+   - vector& assign(vc.begin(),vc.end())
+    区间[beg,end)赋值
+   - vector& assign(int n,ElemType val)
+    n个val值
+
+
+
+### 7.1.4 vector容量和大小操作
+1. 返回容量空间：
+  - capacity()
+
+2. 返回大小空间：
+  - size()
+
+3. 重置容器大小：
+  - vector& resize(int n,int val)
+    容器vc大小重置为n，若变长则用新的val填充增加的长度；若变短则直接删除末尾的元素
+
+    **不改变容量，只改变大小size**
+
+### 7.1.5 vector插入删除操作
+1. 尾部操作
+   - push_back();
+    
+    尾插法
+   
+   - pop_back();
+
+    尾删法
+
+2. 一般操作
+   - insert(const_iterator pos,elem)
+
+    在迭代器指向的pos位置插入元素elem
+
+   - insert(const_iterator pos,int cnt,elem)
+
+    ->pos   插入cnt个元素elem
+
+   - erase(const_iterator pos)
+
+    删除->pos处的元素
+
+   - erase(const_iterator begin,const_iterator end)
+
+    删除->beg到->end闭开区间的元素
+
+### 7.1.6 vector互换操作
+- vector& swap(const vector& vc)
+  
+  v.swap(v1)
+
+  将v和v1的元素、大小、容量等信息全部互换的操作
+
+**用途：容器占用容量空间的收缩**
+
+```c++
+#include<iostream>
+#include<vector>
+using namespace std;
+
+vector<int> v(10000);       //此时v.capacity()由系统分配且一定>=v.size()
+v.resize(3);                //此时v.size()被重置，但容量capacity未被改变，占用大量闲置空间
+
+vector<int>(v).swap(v)      //使用拷贝构造函数创建匿名对象x，之后交换容器
+                            //语句执行完毕后匿名对象x即刻被系统回收，闲置空间被一起回收
+
+```
+
+### 7.1.7 vector预留操作
+- vector& reserve(int num)
+  
+  预留num个连续空间，不初始化且无法访问，**减少增加元素时重新开辟堆区存储空间的次数**
+
+
+## 7.2 string容器
+`#include<string>`
+
+原理上是属于**类**，类名string，类内部封装的数据是char*，一个指针
+
+string类同时也封装了很多成员函数：
+    
+    .find()     .copy()     .delete()     .replace()     .insert()
+
+不必担心数组越界，类内部自动处理
+
+### 7.2.1 string初始化方式
+
+|成员函数|格式|含义|
+|:--:|:--:|:--:|
+|string()|`string str`|初始化一个空的string类|
+|string(const char* c)|`char *c;string s2(c);`|用字符指针初始化|
+|string(const string& s)|`string s3;string s3(str)`|用另一个string类初始化|
+|string(int n,char c)|`string s4(5,A)`|用n个字符c来初始化|
+
+
+### 7.2.2 string赋值操作
+两种方式：
+1. 运算符重载  =
+   - str=(char c);
+   - str=(char* c);
+   - str=(string& s);
+    
+    *可以用单个字符进行赋值*
+
+
+
+2. 成员函数 assign()
+   - str.assign(const char* c,int n);//////////字符数组c的**前n位**
+   - str.assign(const string& S);
+   - str.assign(const char*c);
+   - str.assign(int n,char c);///////////n个字符c
+
+
+### 7.2.3 string拼接操作
+两种方式
+1. 运算符重载   +=
+    同赋值操作
+
+2. 成员函数    append()
+   - str.append(const string& S);
+   - str.append(const string& S, int pos , int n);///////////字符串**从下标pos**开始的**后n位**字符
+   - str.append(const char* c, int n)//////////字符数组c的**前n位**
+   - str.append(const char* c)
+
+
+
+### 7.2.4 string查找和替换
+
+**查找**
+
+两中成员函数find()和rfind()的区别
+
+1. int find(const string& s1, int pos=0,int n) 
+
+    str.find(s1)
+   
+   在str中下标pos处(默认从第一个位置开始)的**前n个字符**中查找是否存在s1字符串，若有则返回一个int型的数据，为下标index，**没找到返回-1**
+
+2. int rfind(const string& s1, int pos=**str.length()-1**,int n)
+   
+   str.rfind(s1)
+
+   在str中下标pos处(默认从后向前)的**前n个字符**中，返回str中字符串s1最后出现的位置下标index，**没找到返回-1**
+
+
+**替换**
+string& replace(int pos,int n,const string& S或者const char* C)
+
+str.replace(1,3,"1111")
+
+在str字符串中下标pos处**往后n**个字符全部替换为S或者C
+
+
+
+### 7.2.5 string的插入和删除
+1. 插入操作  insert()
+   - string& insert(int pos,const string& s);
+   - string& insert(int pos,const char* c);
+   - string& insert(int pos,int n,char c);
+
+    在str下标pos处插入字符串，**注意不能直接插入单个字符**
+    
+2. 删除操作  erase()
+   - string& erase(int pos,int n=**str.length()-1**)
+
+    从str下标为pos处开始删除**往后n个字符**
+
+
+### 7.2.6 string的子串
+- **string** substr(int pos,int n=**str.length()-1**) **const**
+  
+  从str下标为pos处往后截取n个字符，构成一个新的字符串
+
+  **注意**：这个函数一般通过赋值操作，赋给其他的string字符串类：
+  
+  如同`string str1=str.substr(0,4)`
+
+
+
+
+
+
