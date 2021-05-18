@@ -33,6 +33,6 @@
 *.txt
 
 #files
-out/*
+/out/*
 
 

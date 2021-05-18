@@ -1,4 +1,5 @@
+#pragma once
 #include<iostream>
 using namespace std;
 
-void swap(int &,int &);
+void swap(int &a, int &b);
