@@ -39,7 +39,7 @@
     "code-runner.runInTerminal": true,
     "C_Cpp.intelliSenseEngineFallback": "Enabled",
     "background.customImages": [
-      "file:///E:/军品造型/JSOC-陆军游骑兵/杂项豆知识/MIB.jpg"
+      "file:///C:/Users/ASUS/Desktop/2018-02-20 131646.png"
     ],
     "background.style": {
 
@@ -51,6 +51,7 @@
       "height": "100%",
       "background-position": "center",
       "background-repeat": "no-repeat",
+      "background-size":"100%,100%",//图片大小
       "opacity": 0.1
     },
 

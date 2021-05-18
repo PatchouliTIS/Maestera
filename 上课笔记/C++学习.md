@@ -468,13 +468,13 @@ for(;itBegin!=itEnd;itBegin++)
 ```
 
 ### 7.1.2 构造函数
-- vector<T> v
+- vector\<T> v
   
   类模板初始化容器
 
-- vector<...> v(int n,int val)
+- vector<...> v(int n,elem)
 
-    n个val初始化容器，当val缺失时自动赋值0
+    n个val初始化容器，当elem缺失时自动赋值0
 
 - vector<...> v(vc.begin(),vc.end())
   
