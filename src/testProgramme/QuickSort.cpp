@@ -13,7 +13,7 @@ int PartitionII(int a[] , int low , int high)
             ++i;                                        //i先进步
             swap(a[i], a[j]);                           //交换
         }
-    }
+    }                                                   //x<=i的位置均看做是小于pivot的值
     swap(a[i], a[low]);
 
     return i;
