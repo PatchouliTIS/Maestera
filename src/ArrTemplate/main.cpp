@@ -5,7 +5,7 @@ using namespace std;
 int main()
 {
 
-    ArrTP<int> m1(10);            //ä¼ å…¥æœ€å¤§å®¹é‡
+    ArrTP<int> m1(10);            //´«Èë×î´óÈİÁ¿
 
     ArrTP<int> m2(m1);
 

@@ -10,10 +10,10 @@ Manager::Manager(int id,string name,int Did)
 
 void Manager::showInfo()
 {
-    cout<<"èŒå·¥ç¼–å·ï¼š"<<this->m_id
-        <<"\tèŒå·¥å§“åï¼š"<<this->m_name
-        <<"\tå²—ä½ï¼š"<<this->getDept()
-        <<"\tå²—ä½èŒè´£ï¼š"<<this->getDuty()<<endl;
+    cout<<"Ö°¹¤±àºÅ£º"<<this->m_id
+        <<"\tÖ°¹¤ÐÕÃû£º"<<this->m_name
+        <<"\t¸ÚÎ»£º"<<this->getDept()
+        <<"\t¸ÚÎ»Ö°Ôð£º"<<this->getDuty()<<endl;
 
 
 }
@@ -21,11 +21,11 @@ void Manager::showInfo()
 
 string Manager::getDept()
 {
-    return string("ç»ç†");
+    return string("¾­Àí");
 }
 
 string Manager::getDuty()
 {
-    return string("å®Œæˆè€æ¿çš„ä»»åŠ¡ï¼Œç®¡ç†ä¸‹å±žå‘˜å·¥");
+    return string("Íê³ÉÀÏ°åµÄÈÎÎñ£¬¹ÜÀíÏÂÊôÔ±¹¤");
 }
 

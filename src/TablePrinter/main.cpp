@@ -8,7 +8,7 @@ int main(){
     char c=0;
     char *nm[3]={"alp","num","sign"};
     int arr[3]={0};
-    printf("è¯·è¾“å…¥ä¸€ä¸²å­—ç¬¦ï¼š");
+    printf("ÇëÊäÈëÒ»´®×Ö·û£º");
     
     while(scanf("%c",&c)!=EOF){
         if(c>='A'&&c<='Z'||c>='a'&&c<='z'){

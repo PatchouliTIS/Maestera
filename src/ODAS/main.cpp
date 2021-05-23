@@ -14,19 +14,19 @@ int main()
     while(true)
     {
         as.show_menu();
-        cout << "è¯·è¾“å…¥æ‚¨çš„é€‰æ‹©ï¼š" << endl;
+        cout << "ÇëÊäÈëÄúµÄÑ¡Ôñ£º" << endl;
         cin >> flag;
         switch(flag)
         {
-            case 0:         //é€€å‡ºç¨‹åº
+            case 0:         //ÍË³ö³ÌĞò
                 as.quitSys();
                 break;
-            case 1:         //å¼€å§‹æ¯”èµ›
+            case 1:         //¿ªÊ¼±ÈÈü
                 as.start_Spch();
                 break;
-            case 2:         //æŸ¥çœ‹è®°å½•
+            case 2:         //²é¿´¼ÇÂ¼
                 break;
-            case 3:        //æ¸…ç©ºè®°å½•
+            case 3:        //Çå¿Õ¼ÇÂ¼
                 break;
 
                 default:

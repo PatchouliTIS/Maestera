@@ -13,47 +13,47 @@ int main(){
     workerManager wm;
 
     // Worker* wk=NULL;
-    // wk=new Employee(1,"ç”°æ‰€æµ©äºŒ",1);
+    // wk=new Employee(1,"ÌïËùºÆ¶ş",1);
     // wk->showInfo();
 
 
     // Worker* bs=NULL;
-    // bs=new Boss(2,"å¼ ä¸‰",1);
+    // bs=new Boss(2,"ÕÅÈı",1);
     // bs->showInfo();
     
-    int mk=0;   //ç”¨æˆ·é€‰æ‹©é€‰é¡¹
-    while(true){        //æ­»å¾ªç¯ï¼Œå½“é€‰æ‹©0æ—¶æ‰é€€å‡ºexit(0)
+    int mk=0;   //ÓÃ»§Ñ¡ÔñÑ¡Ïî
+    while(true){        //ËÀÑ­»·£¬µ±Ñ¡Ôñ0Ê±²ÅÍË³öexit(0)
         wm.Show_menu();
-        cout<<"è¯·è¾“å…¥æ‚¨çš„é€‰æ‹©ï¼š"<<endl;
+        cout<<"ÇëÊäÈëÄúµÄÑ¡Ôñ£º"<<endl;
         cin>>mk;
         switch(mk)
         {
         case 0:
             wm.exitSystem();
             break;
-        case 1://æ·»åŠ æ–°èŒå·¥
+        case 1://Ìí¼ÓĞÂÖ°¹¤
             wm.Add_Emp();
             break;
-        case 2://æ˜¾ç¤ºèŒå·¥ä¿¡æ¯
+        case 2://ÏÔÊ¾Ö°¹¤ĞÅÏ¢
             wm.show_Emp();
             break;
-        case 3://åˆ é™¤ç¦»èŒäººå‘˜
+        case 3://É¾³ıÀëÖ°ÈËÔ±
             wm.del_Emp();
             break;
-        case 4://ä¿®æ”¹èŒå·¥ä¿¡æ¯
+        case 4://ĞŞ¸ÄÖ°¹¤ĞÅÏ¢
             wm.mod_Emp();
             break;
-        case 5://æŸ¥æ‰¾èŒå·¥ä¿¡æ¯
+        case 5://²éÕÒÖ°¹¤ĞÅÏ¢
             wm.search_Emp();
             break;
-        case 6://æŒ‰ç…§ç¼–å·æ’åº
+        case 6://°´ÕÕ±àºÅÅÅĞò
             wm.sort_Emp();
             break;
-        case 7://æ¸…ç©ºæ‰€æœ‰æ–‡æ¡£
+        case 7://Çå¿ÕËùÓĞÎÄµµ
             wm.fileClear();
             break;
         default:
-            system("cls");      //æ¸…ç©ºå±å¹•
+            system("cls");      //Çå¿ÕÆÁÄ»
             break;
         }
     }

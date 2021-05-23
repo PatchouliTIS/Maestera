@@ -1,4 +1,4 @@
-#pragma once        //è¯¥ç¼–è¯‘æŒ‡ç¤ºå™¨ä¸‹çš„æ–‡ä»¶åªè¢«æ‰“å¼€ä¸€æ¬¡
+#pragma once        //¸Ã±àÒëÖ¸Ê¾Æ÷ÏÂµÄÎÄ¼şÖ»±»´ò¿ªÒ»´Î
 
 #include<iostream>
 #include<fstream>
@@ -9,51 +9,51 @@
 #include "boss.h"
 #define FNAME "C:/Users/ASUS/Desktop/VMshare/out/empFile.txt"
 using namespace std;
-//å£°æ˜ä¸€ä¸ªç®¡ç†ç±»ï¼Œç”¨äºç®¡ç†ã€æ˜¾ç¤ºèŒå·¥ä¿¡æ¯
+//ÉùÃ÷Ò»¸ö¹ÜÀíÀà£¬ÓÃÓÚ¹ÜÀí¡¢ÏÔÊ¾Ö°¹¤ĞÅÏ¢
 class workerManager
 {
 public:
 
-    int emp_num;        //èŒå·¥æ€»äººæ•°
+    int emp_num;        //Ö°¹¤×ÜÈËÊı
 
-    Worker **ptr;       //ç”¨å †åŒºæ•°ç»„ä¿å­˜èŒå·¥ç±»
+    Worker **ptr;       //ÓÃ¶ÑÇøÊı×é±£´æÖ°¹¤Àà
     
-    bool m_isFileEmpty; //è¯»å–æ–‡ä»¶æ—¶ç”¨äºåˆ¤æ–­æ–‡ä»¶æ˜¯å¦ä¸ºç©º
+    bool m_isFileEmpty; //¶ÁÈ¡ÎÄ¼şÊ±ÓÃÓÚÅĞ¶ÏÎÄ¼şÊÇ·ñÎª¿Õ
 
-    map<int, int> disc;//ç”¨äºæ’å…¥æ•°ç»„çš„åˆ¤æ–­ï¼Œæ˜ å°„:èŒå·¥ç±»æŒ‡é’ˆæ•°ç»„ä¸‹æ ‡---->èŒå·¥ç¼–å·
+    map<int, int> disc;//ÓÃÓÚ²åÈëÊı×éµÄÅĞ¶Ï£¬Ó³Éä:Ö°¹¤ÀàÖ¸ÕëÊı×éÏÂ±ê---->Ö°¹¤±àºÅ
 
-    workerManager();//æ„é€ å‡½æ•°
+    workerManager();//¹¹Ôìº¯Êı
 
     void Show_menu();
 
     void Add_Emp();
 
-    void save();//ä¿å­˜æ–‡ä»¶å‡½æ•°
+    void save();//±£´æÎÄ¼şº¯Êı
 
-    void exitSystem();//é€€å‡ºç®¡ç†ç³»ç»Ÿ
+    void exitSystem();//ÍË³ö¹ÜÀíÏµÍ³
 
-    int get_empNum();//ç»Ÿè®¡ç›®æ ‡æ–‡ä»¶ä¸­çš„èŒå·¥è®°å½•æ¡ç›®ä¸ªæ•°
+    int get_empNum();//Í³¼ÆÄ¿±êÎÄ¼şÖĞµÄÖ°¹¤¼ÇÂ¼ÌõÄ¿¸öÊı
 
-    void init_EmpArr();//åˆå§‹åŒ–èŒå·¥ç±»æŒ‡é’ˆæ•°ç»„
+    void init_EmpArr();//³õÊ¼»¯Ö°¹¤ÀàÖ¸ÕëÊı×é
 
-    void show_Emp();//æ˜¾ç¤ºèŒå·¥
+    void show_Emp();//ÏÔÊ¾Ö°¹¤
 
-    void del_Emp();//åˆ é™¤èŒå·¥è®°å½•
+    void del_Emp();//É¾³ıÖ°¹¤¼ÇÂ¼
 
-    int isEmpExist(int num);//åˆ¤æ–­ç¦»èŒå‘˜å·¥æ˜¯å¦å­˜åœ¨
+    int isEmpExist(int num);//ÅĞ¶ÏÀëÖ°Ô±¹¤ÊÇ·ñ´æÔÚ
 
-    void mod_Emp();//ä¿®æ”¹èŒå·¥è®°å½•
+    void mod_Emp();//ĞŞ¸ÄÖ°¹¤¼ÇÂ¼
 
-    void search_Emp();//æŸ¥æ‰¾èŒå·¥ä¿¡æ¯
+    void search_Emp();//²éÕÒÖ°¹¤ĞÅÏ¢
 
-    void sort_Emp();//æ’åº
+    void sort_Emp();//ÅÅĞò
 
     void sortByName(int flag);
 
     void sortByID(int flag);
 
-    void fileClear();//æ¸…ç©ºæ–‡æ¡£
+    void fileClear();//Çå¿ÕÎÄµµ
 
-    ~workerManager();//ææ„å‡½æ•°
+    ~workerManager();//Îö¹¹º¯Êı
 
 };

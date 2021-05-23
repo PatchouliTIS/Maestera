@@ -9,16 +9,16 @@ using namespace std;
 class ASys
 {
 public:
-    vector<int> v_r1;           //ç¬¬ä¸€è½®æ¯”èµ›é€‰æ‰‹çš„ç¼–å·
+    vector<int> v_r1;           //µÚÒ»ÂÖ±ÈÈüÑ¡ÊÖµÄ±àºÅ
 
-    vector<int> v_r2;            //ç¬¬äºŒè½®æ¯”èµ›é€‰æ‰‹çš„ç¼–å·
+    vector<int> v_r2;            //µÚ¶şÂÖ±ÈÈüÑ¡ÊÖµÄ±àºÅ
 
-    vector<int> vVictory;        //èƒœåˆ©è€…çš„ç¼–å·
-    //é€šè¿‡vectorçš„push_back()å‡½æ•°å®ç°æ·»åŠ 
+    vector<int> vVictory;        //Ê¤ÀûÕßµÄ±àºÅ
+    //Í¨¹ıvectorµÄpush_back()º¯ÊıÊµÏÖÌí¼Ó
 
-    map<int, Speaker> map_Spkr;  //ç¼–å·å’Œé€‰æ‰‹ç±»çš„æ˜ å°„å…³ç³»
+    map<int, Speaker> map_Spkr;  //±àºÅºÍÑ¡ÊÖÀàµÄÓ³Éä¹ØÏµ
 
-    int m_Round;                //å½“å‰æ¯”èµ›è½®æ¬¡
+    int m_Round;                //µ±Ç°±ÈÈüÂÖ´Î
 
 
 

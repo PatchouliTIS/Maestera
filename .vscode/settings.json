@@ -1,16 +1,18 @@
 {
-    "terminal.integrated.profiles.windows": {
-        "PowerShell": {
-          "source": "PowerShell",
-          "overrideName": true,
-          "args": ["-NoExit", "/c", "chcp 65001"],
-          "icon": "terminal-powershell",
-          "env": {
-            "TEST_VAR": "value"
-          }
-        }
-      },
-    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    // "terminal.integrated.profiles.windows": {
+    //     "PowerShell": {
+    //       "source": "PowerShell",
+    //       "overrideName": true,
+    //       "args": ["-NoExit", "/c", "chcp 65001"],
+    //       "icon": "terminal-powershell",
+    //       "env": {
+    //         "TEST_VAR": "value"
+    //       }
+    //     }
+    //   },
+    // "terminal.integrated.defaultProfile.windows": "PowerShell",
+    
+    "terminal.integrated.fontFamily": "Lucida Console",
     
     
     
@@ -56,7 +58,7 @@
     "code-runner.runInTerminal": true,
     "C_Cpp.intelliSenseEngineFallback": "Enabled",
     "background.customImages": [
-      "file:///C:/Users/ASUS/Desktop/2018-02-20 131646.png"
+      "file:///C:/Users/ASUS/Desktop/90013824_p0.jpg"
     ],
     "background.style": {
 
@@ -71,11 +73,5 @@
       "background-size":"100%,100%",//图片大小
       "opacity": 0.1
     },
-
-
-
-    "files.autoGuessEncoding": true,
-
-
-
+    "files.encoding": "gbk",
 }

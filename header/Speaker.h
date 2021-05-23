@@ -9,7 +9,7 @@ using namespace std;
 class Speaker
 {
 public:
-    string m_name;      //é€‰æ‰‹å§“å
-    //int m_num;   ç¼–å·é€šè¿‡åœ¨ç®¡ç†ç±»æ·»åŠ ä¸€ä¸ªå“ˆå¸Œè¡¨æ¥å¯¹åº”
-    double m_score[2];  //ä¸¤è½®çš„å¾—åˆ†
+    string m_name;      //Ñ¡ÊÖĞÕÃû
+    //int m_num;   ±àºÅÍ¨¹ıÔÚ¹ÜÀíÀàÌí¼ÓÒ»¸ö¹şÏ£±íÀ´¶ÔÓ¦
+    double m_score[2];  //Á½ÂÖµÄµÃ·Ö
 };

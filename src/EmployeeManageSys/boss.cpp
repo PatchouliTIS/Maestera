@@ -6,15 +6,15 @@ Boss::Boss(int id,string name,int Did)
     this->m_name=name;
     this->m_Did=Did;
 
-}//æ„é€ æ—¶åˆå§‹åŒ–
+}//¹¹ÔìÊ±³õÊ¼»¯
 
 
 void Boss::showInfo()
 {
-    cout<<"èŒå·¥ç¼–å·ï¼š"<<this->m_id
-        <<"\tèŒå·¥å§“åï¼š"<<this->m_name
-        <<"\tå²—ä½ï¼š"<<this->getDept()
-        <<"\tå²—ä½èŒè´£ï¼š"<<this->getDuty()<<endl;
+    cout<<"Ö°¹¤±àºÅ£º"<<this->m_id
+        <<"\tÖ°¹¤ĞÕÃû£º"<<this->m_name
+        <<"\t¸ÚÎ»£º"<<this->getDept()
+        <<"\t¸ÚÎ»Ö°Ôğ£º"<<this->getDuty()<<endl;
 
 
 }
@@ -22,10 +22,10 @@ void Boss::showInfo()
 
 string Boss::getDept()
 {
-    return string("è€æ¿");
+    return string("ÀÏ°å");
 }
 
 string Boss::getDuty()
 {
-    return string("ç»™ç»ç†æŒ‡æ´¾ä»»åŠ¡");
+    return string("¸ø¾­ÀíÖ¸ÅÉÈÎÎñ");
 }

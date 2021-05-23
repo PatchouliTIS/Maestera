@@ -7,10 +7,10 @@ class Employee :public Worker
 public:
     Employee(int id,string name,int Did);
 
-    //鏄剧ず涓汉淇℃伅
+    //显示个人信息
     void showInfo();
 
-    //鏄剧ず宀椾綅淇℃伅
+    //显示岗位信息
     string getDept();
 
     string getDuty();

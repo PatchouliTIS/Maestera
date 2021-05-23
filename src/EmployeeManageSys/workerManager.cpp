@@ -1,45 +1,45 @@
 #include "workerManager.h"
 
-workerManager::workerManager()      //æ„é€ å‡½æ•°ç©ºå®ç°
+workerManager::workerManager()      //¹¹Ôìº¯Êı¿ÕÊµÏÖ
 {
     
-    //ç®¡ç†ç±»é€šè¿‡æ‰“å¼€æ–‡ä»¶çš„æ–¹å¼ç»Ÿè®¡æ–‡ä»¶ä¸­çš„æ•°æ®ï¼Œè¿›è¡Œç›¸åº”çš„åˆå§‹åŒ–
-    //ç®¡ç†ç³»ç»Ÿæ„é€ å‡½æ•°è¿›è¡Œåˆå§‹åŒ–å·¥ä½œï¼Œåˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
-    //1. æ–‡ä»¶ä¸å­˜åœ¨
-    //2. æ–‡ä»¶å­˜åœ¨ä½†æ•°æ®ä¸ºç©º
-    //3. æ–‡ä»¶å­˜åœ¨ï¼Œç»§ç»­è¿›è¡Œæ·»åŠ æ“ä½œ
-    //æ–°å»ºç®¡ç†ç³»ç»Ÿæ–‡ä»¶
+    //¹ÜÀíÀàÍ¨¹ı´ò¿ªÎÄ¼şµÄ·½Ê½Í³¼ÆÎÄ¼şÖĞµÄÊı¾İ£¬½øĞĞÏàÓ¦µÄ³õÊ¼»¯
+    //¹ÜÀíÏµÍ³¹¹Ôìº¯Êı½øĞĞ³õÊ¼»¯¹¤×÷£¬ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //1. ÎÄ¼ş²»´æÔÚ
+    //2. ÎÄ¼ş´æÔÚµ«Êı¾İÎª¿Õ
+    //3. ÎÄ¼ş´æÔÚ£¬¼ÌĞø½øĞĞÌí¼Ó²Ù×÷
+    //ĞÂ½¨¹ÜÀíÏµÍ³ÎÄ¼ş
     ifstream ifs;
-    ifs.open(FNAME,ios::in);        //è¾“å…¥æ–¹å¼ï¼Œè¯»å–æ–‡ä»¶
+    ifs.open(FNAME,ios::in);        //ÊäÈë·½Ê½£¬¶ÁÈ¡ÎÄ¼ş
 
-    //åŠ å…¥åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
-    //1. æ–‡ä»¶ä¸å­˜åœ¨
-    if(!ifs.is_open())              //è¯»å–æ–‡ä»¶
+    //¼ÓÈëÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //1. ÎÄ¼ş²»´æÔÚ
+    if(!ifs.is_open())              //¶ÁÈ¡ÎÄ¼ş
     {
-        cout<<"æ–‡ä»¶ä¸å­˜åœ¨ï¼Œåˆå§‹åŒ–æ–‡ä»¶ä¸­"<<endl;
+        cout<<"ÎÄ¼ş²»´æÔÚ£¬³õÊ¼»¯ÎÄ¼şÖĞ"<<endl;
         this->emp_num=0;
         this->ptr=NULL;
-        this->m_isFileEmpty=true;   //æ–‡ä»¶å­˜åœ¨ä¸”ä¸ºç©º
+        this->m_isFileEmpty=true;   //ÎÄ¼ş´æÔÚÇÒÎª¿Õ
 
         ifs.close();
 
-        return;                     //å› ä¸ºæ–‡ä»¶ä¸å­˜åœ¨ï¼Œæ­¤æ—¶åªè¿›è¡Œåˆå§‹åŒ–æ“ä½œï¼Œä¸è¿›è¡Œå…¶ä»–æ“ä½œ
+        return;                     //ÒòÎªÎÄ¼ş²»´æÔÚ£¬´ËÊ±Ö»½øĞĞ³õÊ¼»¯²Ù×÷£¬²»½øĞĞÆäËû²Ù×÷
 
     }
 
 
 
-    //2.æ–‡ä»¶å­˜åœ¨ä½†æ•°æ®ä¸ºç©º
+    //2.ÎÄ¼ş´æÔÚµ«Êı¾İÎª¿Õ
     char ch;
-    ifs >> ch;        //å…ˆè¿›è¡Œä¸€æ¬¡æ–‡ä»¶è¯»å–ï¼Œè‹¥æ–‡ä»¶ä¸ºç©ºåˆ™åœ¨è¯»å–å®Œæ–‡ä»¶ä¹‹åï¼ŒifsæŒ‡é’ˆæŒ‡å‘æ–‡ä»¶çš„ç»“å°¾æ ‡å¿—ï¼Œå³ä¸ºEOF
+    ifs >> ch;        //ÏÈ½øĞĞÒ»´ÎÎÄ¼ş¶ÁÈ¡£¬ÈôÎÄ¼şÎª¿ÕÔòÔÚ¶ÁÈ¡ÍêÎÄ¼şÖ®ºó£¬ifsÖ¸ÕëÖ¸ÏòÎÄ¼şµÄ½áÎ²±êÖ¾£¬¼´ÎªEOF
     if(ifs.eof())
     {
-        cout<<"æ–‡ä»¶ä¸ºç©ºï¼Œé‡æ–°åˆå§‹åŒ–æ–‡ä»¶ä¸­"<<endl;
+        cout<<"ÎÄ¼şÎª¿Õ£¬ÖØĞÂ³õÊ¼»¯ÎÄ¼şÖĞ"<<endl;
         
         
         this->emp_num=0;
         this->ptr=NULL;
-        this->m_isFileEmpty=true;   //æ–‡ä»¶å­˜åœ¨ä¸”ä¸ºç©º
+        this->m_isFileEmpty=true;   //ÎÄ¼ş´æÔÚÇÒÎª¿Õ
 
         ifs.close();
 
@@ -48,55 +48,55 @@ workerManager::workerManager()      //æ„é€ å‡½æ•°ç©ºå®ç°
 
     //3.
     int num = this->get_empNum();
-    cout << "èŒå·¥äººæ•°ä¸ºï¼š" << num << endl;
-    this->emp_num = num;            //é€šè¿‡è¯»å–ç›®æ ‡æ–‡ä»¶è®°å½•ä¸ªæ•°åˆå§‹åŒ–èŒå·¥äººæ•°
+    cout << "Ö°¹¤ÈËÊıÎª£º" << num << endl;
+    this->emp_num = num;            //Í¨¹ı¶ÁÈ¡Ä¿±êÎÄ¼ş¼ÇÂ¼¸öÊı³õÊ¼»¯Ö°¹¤ÈËÊı
 
-    this->ptr = new Worker *[this->emp_num];//å¼€è¾Ÿç©ºé—´
-    this->init_EmpArr();            //é€šè¿‡è¯»å–æ–‡ä»¶åˆå§‹åŒ–ç®¡ç†ç±»ç»´æŠ¤çš„èŒå·¥ç±»æŒ‡é’ˆæ•°ç»„
+    this->ptr = new Worker *[this->emp_num];//¿ª±Ù¿Õ¼ä
+    this->init_EmpArr();            //Í¨¹ı¶ÁÈ¡ÎÄ¼ş³õÊ¼»¯¹ÜÀíÀàÎ¬»¤µÄÖ°¹¤ÀàÖ¸ÕëÊı×é
     
-    this->sortByID(2);              //é»˜è®¤è¿›è¡ŒIDå‡åºæ’åº
+    this->sortByID(2);              //Ä¬ÈÏ½øĞĞIDÉıĞòÅÅĞò
     this->m_isFileEmpty = false;
 }
-//ç±»å¤–+æ´¾ç”Ÿç±»å®ç°æˆå‘˜å‡½æ•°è¦åŠ thisï¼ˆè‡ªèº«çš„æŒ‡é’ˆ
+//ÀàÍâ+ÅÉÉúÀàÊµÏÖ³ÉÔ±º¯ÊıÒª¼Óthis£¨×ÔÉíµÄÖ¸Õë
 
 
 void workerManager::Show_menu()
 {
     cout<<"**********************************"<<endl;
-    cout<<"******æ¬¢è¿ä½¿ç”¨èŒå·¥ç®¡ç†ç³»ç»Ÿ********"<<endl;
-    cout<<"**********0.é€€å‡ºç®¡ç†ç¨‹åº**********"<<endl;
-    cout<<"**********1.å¢åŠ èŒå·¥ä¿¡æ¯**********"<<endl;
-    cout<<"**********2.æ˜¾ç¤ºèŒå·¥ä¿¡æ¯**********"<<endl;
-    cout<<"**********3.åˆ é™¤ç¦»èŒäººå‘˜**********"<<endl;
-    cout<<"**********4.ä¿®æ”¹èŒå·¥ä¿¡æ¯**********"<<endl;
-    cout<<"**********5.æŸ¥æ‰¾èŒå·¥ä¿¡æ¯**********"<<endl;
-    cout<<"**********6.æŒ‰ç…§ç¼–å·æ’åº**********"<<endl;
-    cout<<"**********7.æ¸…ç©ºæ‰€æœ‰æ–‡æ¡£**********"<<endl;
+    cout<<"******»¶Ó­Ê¹ÓÃÖ°¹¤¹ÜÀíÏµÍ³********"<<endl;
+    cout<<"**********0.ÍË³ö¹ÜÀí³ÌĞò**********"<<endl;
+    cout<<"**********1.Ôö¼ÓÖ°¹¤ĞÅÏ¢**********"<<endl;
+    cout<<"**********2.ÏÔÊ¾Ö°¹¤ĞÅÏ¢**********"<<endl;
+    cout<<"**********3.É¾³ıÀëÖ°ÈËÔ±**********"<<endl;
+    cout<<"**********4.ĞŞ¸ÄÖ°¹¤ĞÅÏ¢**********"<<endl;
+    cout<<"**********5.²éÕÒÖ°¹¤ĞÅÏ¢**********"<<endl;
+    cout<<"**********6.°´ÕÕ±àºÅÅÅĞò**********"<<endl;
+    cout<<"**********7.Çå¿ÕËùÓĞÎÄµµ**********"<<endl;
     cout<<"**********************************"<<endl;
     cout<<endl;
 }
 
 void workerManager::Add_Emp()
 {
-    cout<<"è¯·è¾“å…¥æ·»åŠ èŒå·¥æ•°é‡"<<endl;   //æ‰¹é‡æ·»åŠ 
+    cout<<"ÇëÊäÈëÌí¼ÓÖ°¹¤ÊıÁ¿"<<endl;   //ÅúÁ¿Ìí¼Ó
     int addsz=0;
     cin>>addsz;
     while(1)
     {   
         if(addsz>0)
         {
-            //æ·»åŠ èŒå·¥äººæ•°
-            int newsz=this->emp_num+addsz;  //æ¯æ¬¡è°ƒç”¨ç±»æˆå‘˜æˆ–æˆå‘˜å‡½æ•°éƒ½è¦ç”¨thisæŒ‡ä»£
-            //å¼€è¾Ÿæ–°ç©ºé—´
-            Worker **newptr=new Worker*[newsz]; //å­˜å‚¨Workerç±»çš„æŒ‡é’ˆçš„æ•°ç»„ï¼Œä½¿ç”¨æŒ‡é’ˆè®¿é—®æ´¾ç”Ÿç±»å¯ä»¥å®ç°è™šå‡½æ•°åœ¨å¤šæ€ç»§æ‰¿ä¸Šçš„åŠŸèƒ½
+            //Ìí¼ÓÖ°¹¤ÈËÊı
+            int newsz=this->emp_num+addsz;  //Ã¿´Îµ÷ÓÃÀà³ÉÔ±»ò³ÉÔ±º¯Êı¶¼ÒªÓÃthisÖ¸´ú
+            //¿ª±ÙĞÂ¿Õ¼ä
+            Worker **newptr=new Worker*[newsz]; //´æ´¢WorkerÀàµÄÖ¸ÕëµÄÊı×é£¬Ê¹ÓÃÖ¸Õë·ÃÎÊÅÉÉúÀà¿ÉÒÔÊµÏÖĞéº¯ÊıÔÚ¶àÌ¬¼Ì³ĞÉÏµÄ¹¦ÄÜ
             
             
             if(newptr==NULL)
             {
-                cout<<"å †åŒºç©ºé—´å·²æ»¡ï¼Œæ·»åŠ å¤±è´¥"<<endl;
+                cout<<"¶ÑÇø¿Õ¼äÒÑÂú£¬Ìí¼ÓÊ§°Ü"<<endl;
                 exit(0);
             }
-            //æ‹·è´æ—§æ•°æ®ï¼ˆå› ä¸ºæ˜¯é¡ºåºè¡¨ï¼Œæ¨èä½¿ç”¨é“¾è¡¨å­˜å‚¨ï¼‰
+            //¿½±´¾ÉÊı¾İ£¨ÒòÎªÊÇË³Ğò±í£¬ÍÆ¼öÊ¹ÓÃÁ´±í´æ´¢£©
             if(this->ptr!=NULL)
             {
                 for(int i=0;i<emp_num;i++)
@@ -106,7 +106,7 @@ void workerManager::Add_Emp()
 
             }
 
-            //æ‰¹é‡æ·»åŠ æ–°æ•°æ®
+            //ÅúÁ¿Ìí¼ÓĞÂÊı¾İ
             for(int i=0;i<addsz;i++)
             {
                 int id;
@@ -114,28 +114,28 @@ void workerManager::Add_Emp()
                 int Dselect;
 
 
-                //äº¤äº’ç•Œé¢
-                cout<<"è¯·è¾“å…¥ç¬¬"<<i+1<<"ä¸ªæ–°èŒå·¥çš„ç¼–å·ï¼š"<<endl;
+                //½»»¥½çÃæ
+                cout<<"ÇëÊäÈëµÚ"<<i+1<<"¸öĞÂÖ°¹¤µÄ±àºÅ£º"<<endl;
                 while (cin >> id)
                 {
                     if(this->disc.count(id))
                     {
-                        cout << "å·²å­˜åœ¨è¯¥ç¼–å·ï¼Œè¯·é‡æ–°è¾“å…¥ï¼š" << endl;
+                        cout << "ÒÑ´æÔÚ¸Ã±àºÅ£¬ÇëÖØĞÂÊäÈë£º" << endl;
                     }
                     else
                         break;
                 }
-                cout<<"è¯·è¾“å…¥ç¬¬"<<i+1<<"ä¸ªæ–°èŒå·¥çš„å§“åï¼š"<<endl;
+                cout<<"ÇëÊäÈëµÚ"<<i+1<<"¸öĞÂÖ°¹¤µÄĞÕÃû£º"<<endl;
                 cin>>name;
 
-                cout<<"è¯·è¾“å…¥ç¬¬"<<i+1<<"ä¸ªæ–°èŒå·¥çš„å²—ä½ï¼š"<<endl;
-                cout<<"1ã€æ™®é€šèŒå·¥"<<endl
-                    <<"2ã€éƒ¨é—¨ç»ç†"<<endl
-                    <<"3ã€è€æ¿"<<endl;
+                cout<<"ÇëÊäÈëµÚ"<<i+1<<"¸öĞÂÖ°¹¤µÄ¸ÚÎ»£º"<<endl;
+                cout<<"1¡¢ÆÕÍ¨Ö°¹¤"<<endl
+                    <<"2¡¢²¿ÃÅ¾­Àí"<<endl
+                    <<"3¡¢ÀÏ°å"<<endl;
                 cin>>Dselect;
 
                 Worker* tmp=NULL;
-                //ä¿å­˜æ–°å‘˜å·¥ä¿¡æ¯
+                //±£´æĞÂÔ±¹¤ĞÅÏ¢
                 switch(Dselect)
                 {
                     case 1:
@@ -149,39 +149,39 @@ void workerManager::Add_Emp()
                         break;
                     default:break;
                 }
-                //å°†æ–°å‘˜å·¥ç±»çš„æŒ‡é’ˆå­˜å…¥æŒ‡é’ˆæ•°ç»„
+                //½«ĞÂÔ±¹¤ÀàµÄÖ¸Õë´æÈëÖ¸ÕëÊı×é
                 newptr[this->emp_num+i]=tmp;
                 this->disc[id] = this->emp_num + i;
 
-            }//æ‰¹é‡æ·»åŠ ç»“æŸ
+            }//ÅúÁ¿Ìí¼Ó½áÊø
             
 
-            //é‡Šæ”¾åŸæ¥ç©ºé—´
+            //ÊÍ·ÅÔ­À´¿Õ¼ä
             delete [] this->ptr;
-            //å°†åŸæŒ‡é’ˆæ•°ç»„æŒ‡å‘æ–°ç©ºé—´
+            //½«Ô­Ö¸ÕëÊı×éÖ¸ÏòĞÂ¿Õ¼ä
             this->ptr=newptr;
-            //æ›´æ”¹èŒå·¥äººæ•°
+            //¸ü¸ÄÖ°¹¤ÈËÊı
             this->emp_num=newsz;
             
             
 
-            //æˆåŠŸæ·»åŠ åé€šè¿‡æ–‡ä»¶æ“ä½œä¿å­˜æ–‡ä»¶
+            //³É¹¦Ìí¼ÓºóÍ¨¹ıÎÄ¼ş²Ù×÷±£´æÎÄ¼ş
             this->save();
 
-            //æ›´æ–°æ–‡ä»¶æ˜¯å¦ä¸ºç©ºçš„æ ‡å¿—
+            //¸üĞÂÎÄ¼şÊÇ·ñÎª¿ÕµÄ±êÖ¾
             this->m_isFileEmpty = false;
 
-            //æç¤ºæ·»åŠ æˆåŠŸ
-            cout<<"æˆåŠŸæ·»åŠ "<<addsz<<"åæ–°èŒå·¥"<<endl;
+            //ÌáÊ¾Ìí¼Ó³É¹¦
+            cout<<"³É¹¦Ìí¼Ó"<<addsz<<"ÃûĞÂÖ°¹¤"<<endl;
             break;
         }
         else if(addsz==-1){
-            cout<<"å³å°†è¿”å›ä¸Šçº§èœå•"<<endl;
+            cout<<"¼´½«·µ»ØÉÏ¼¶²Ëµ¥"<<endl;
             break;
         }
 
         else{
-            cout<<"è¾“å…¥æ•°æ®æœ‰è¯¯,è¯·é‡æ–°è¾“å…¥"<<endl;
+            cout<<"ÊäÈëÊı¾İÓĞÎó,ÇëÖØĞÂÊäÈë"<<endl;
         }
     }
     system("pause");
@@ -192,14 +192,14 @@ void workerManager::Add_Emp()
 void workerManager::exitSystem()
 {
     this->save();
-    cout<<"æ¬¢è¿ä¸‹æ¬¡ä½¿ç”¨"<<endl;
+    cout<<"»¶Ó­ÏÂ´ÎÊ¹ÓÃ"<<endl;
     exit(0);
 }
 
 void workerManager::save()
 {
     ofstream ofs;
-    ofs.open(FNAME,ios::out);   //ä»¥å†™(out è¾“å‡º)çš„æ–¹å¼æ‰“å¼€æ–‡ä»¶
+    ofs.open(FNAME,ios::out);   //ÒÔĞ´(out Êä³ö)µÄ·½Ê½´ò¿ªÎÄ¼ş
 
     for(int i=0;i<this->emp_num;i++)
     {
@@ -213,7 +213,7 @@ void workerManager::save()
 
 }
 
-int workerManager::get_empNum()     //é€šè¿‡è¯»å–æ–‡ä»¶çš„æ–¹å¼è·å¾—èŒå·¥äººæ•°
+int workerManager::get_empNum()     //Í¨¹ı¶ÁÈ¡ÎÄ¼şµÄ·½Ê½»ñµÃÖ°¹¤ÈËÊı
 {
     ifstream ifs;
     ifs.open(FNAME, ios::in);
@@ -226,7 +226,7 @@ int workerManager::get_empNum()     //é€šè¿‡è¯»å–æ–‡ä»¶çš„æ–¹å¼è·å¾—èŒå·¥äºº
 
     while(ifs>>id&&ifs>>name&&ifs>>Did)
     {
-        //è®°å½•äººæ•°
+        //¼ÇÂ¼ÈËÊı
         num++;
     }
 
@@ -235,7 +235,7 @@ int workerManager::get_empNum()     //é€šè¿‡è¯»å–æ–‡ä»¶çš„æ–¹å¼è·å¾—èŒå·¥äºº
     return num;
 }
 
-int workerManager::isEmpExist(int num)  //éå†ä¸€æ¬¡èŒå·¥ç±»æŒ‡é’ˆæ•°ç»„ï¼ŒæŸ¥çœ‹æ˜¯å¦å­˜åœ¨è¿™ä¸ªç¼–å·
+int workerManager::isEmpExist(int num)  //±éÀúÒ»´ÎÖ°¹¤ÀàÖ¸ÕëÊı×é£¬²é¿´ÊÇ·ñ´æÔÚÕâ¸ö±àºÅ
 {
     for (int i = 0; i < this->emp_num;i++)
     {
@@ -261,7 +261,7 @@ void workerManager::init_EmpArr()
     string name;
     int Did;
 
-    int index = 0;                  //èŒå·¥ç±»æŒ‡é’ˆæ•°ç»„ä¸‹æ ‡
+    int index = 0;                  //Ö°¹¤ÀàÖ¸ÕëÊı×éÏÂ±ê
     while(ifs >> id && ifs>>name && ifs>>Did)
     {
         Worker *tmp = NULL;
@@ -288,9 +288,9 @@ void workerManager::init_EmpArr()
 
 void workerManager::show_Emp()
 {
-    if(this->m_isFileEmpty)         //æ–‡ä»¶è®°å½•ä¸ºç©º
+    if(this->m_isFileEmpty)         //ÎÄ¼ş¼ÇÂ¼Îª¿Õ
     {
-        cout << "æ–‡ä»¶ä¸ºç©ºï¼" << endl;
+        cout << "ÎÄ¼şÎª¿Õ£¡" << endl;
     }
     else{
         for (int i = 0; i < this->emp_num;i++)
@@ -307,16 +307,16 @@ void workerManager::del_Emp()
 {
     if(this->m_isFileEmpty)
     {
-        cout << "æ–‡ä»¶ä¸ºç©ºï¼" << endl;
+        cout << "ÎÄ¼şÎª¿Õ£¡" << endl;
     }
     else{
-        cout << "è¯·è¾“å…¥ç¦»èŒå‘˜å·¥çš„å‘˜å·¥ç¼–å·" << endl;
+        cout << "ÇëÊäÈëÀëÖ°Ô±¹¤µÄÔ±¹¤±àºÅ" << endl;
         int num;
         cin >> num;
         int index = this->isEmpExist(num);
         if(index==-1)
         {
-            cout << "è¯¥èŒå·¥ä¸å­˜åœ¨ï¼" << endl;
+            cout << "¸ÃÖ°¹¤²»´æÔÚ£¡" << endl;
         }
         else{
             for (int i = index; i < this->emp_num - 1;i++)
@@ -328,7 +328,7 @@ void workerManager::del_Emp()
 
             --this->emp_num;
 
-            this->save();               //æ›´æ–°æ–‡ä»¶
+            this->save();               //¸üĞÂÎÄ¼ş
         }
     }
     system("pause");
@@ -339,11 +339,11 @@ void workerManager::mod_Emp()
 {
     if(this->m_isFileEmpty)
     {
-        cout << "æ–‡ä»¶ä¸ºç©ºï¼" << endl;
+        cout << "ÎÄ¼şÎª¿Õ£¡" << endl;
     }
     else
     {
-        cout << "è¯·è¾“å…¥å‘˜å·¥ç¼–å·" << endl;
+        cout << "ÇëÊäÈëÔ±¹¤±àºÅ" << endl;
         int num;
         cin >> num;
         int index = this->isEmpExist(num);
@@ -355,16 +355,16 @@ void workerManager::mod_Emp()
             string newName;
             int newDiv;
 
-            cout << "å·²æ‰¾åˆ°ç¼–å·ä¸º" << num << "çš„å‘˜å·¥ï¼Œè¯·è¾“å…¥æ–°çš„å‘˜å·¥ç¼–å·ï¼š" << endl;
+            cout << "ÒÑÕÒµ½±àºÅÎª" << num << "µÄÔ±¹¤£¬ÇëÊäÈëĞÂµÄÔ±¹¤±àºÅ£º" << endl;
             cin >> newID;
 
-            cout << "è¯·è¾“å…¥æ–°çš„å‘˜å·¥å§“åï¼š" << endl;
+            cout << "ÇëÊäÈëĞÂµÄÔ±¹¤ĞÕÃû£º" << endl;
             cin >> newName;
 
-            cout << "è¯·è¾“å…¥æ‰€åœ¨éƒ¨é—¨ï¼š" << endl
-                 << "1.æ™®é€šå‘˜å·¥" << endl
-                 << "2.éƒ¨é—¨ç»ç†" << endl
-                 << "3.è€æ¿" << endl;
+            cout << "ÇëÊäÈëËùÔÚ²¿ÃÅ£º" << endl
+                 << "1.ÆÕÍ¨Ô±¹¤" << endl
+                 << "2.²¿ÃÅ¾­Àí" << endl
+                 << "3.ÀÏ°å" << endl;
             cin >> newDiv;
 
             Worker *tmp = NULL;
@@ -388,23 +388,23 @@ void workerManager::mod_Emp()
             this->save();
         }
         else{
-            cout << "ä¿®æ”¹å¤±è´¥ï¼ŒæŸ¥æ— æ­¤äºº" << endl;
+            cout << "ĞŞ¸ÄÊ§°Ü£¬²éÎŞ´ËÈË" << endl;
         }
     }
     system("pause");
     system("cls");
 }
 
-void workerManager::search_Emp()    //ä¸¤ç§æ–¹æ³•æŸ¥æ‰¾èŒå·¥
+void workerManager::search_Emp()    //Á½ÖÖ·½·¨²éÕÒÖ°¹¤
 {
     if(this->m_isFileEmpty)
     {
-        cout << "æ–‡ä»¶ä¸ºç©ºï¼" << endl;
+        cout << "ÎÄ¼şÎª¿Õ£¡" << endl;
     }
     else {
-        cout << "è¯·ç¡®å®šæŸ¥æ‰¾æ–¹å¼ï¼š" << endl
-             << "1.å§“åæŸ¥æ‰¾" << endl
-             << "2.ç¼–å·æŸ¥æ‰¾" << endl;
+        cout << "ÇëÈ·¶¨²éÕÒ·½Ê½£º" << endl
+             << "1.ĞÕÃû²éÕÒ" << endl
+             << "2.±àºÅ²éÕÒ" << endl;
         int mk;
         int cnt = 0;
         cin >> mk;
@@ -412,7 +412,7 @@ void workerManager::search_Emp()    //ä¸¤ç§æ–¹æ³•æŸ¥æ‰¾èŒå·¥
         {    
             if(mk==1)
             {
-                cout << "è¯·è¾“å…¥å§“åï¼š" << endl;
+                cout << "ÇëÊäÈëĞÕÃû£º" << endl;
                 string tName;
                 cin >> tName;
 
@@ -426,13 +426,13 @@ void workerManager::search_Emp()    //ä¸¤ç§æ–¹æ³•æŸ¥æ‰¾èŒå·¥
                             this->ptr[i]->showInfo();
                         }
                     }
-                    cout << "å…±æŸ¥æ‰¾åˆ°" << cnt << "æ¡è®°å½•" << endl;
+                    cout << "¹²²éÕÒµ½" << cnt << "Ìõ¼ÇÂ¼" << endl;
                 }
                 break;
             }
             else if(mk==2)
             {
-                cout << "è¯·è¾“å…¥ç¼–å·ï¼š" << endl;
+                cout << "ÇëÊäÈë±àºÅ£º" << endl;
                 int tid;
                 cin >> tid;
                 if(this->ptr!=NULL)
@@ -443,13 +443,13 @@ void workerManager::search_Emp()    //ä¸¤ç§æ–¹æ³•æŸ¥æ‰¾èŒå·¥
                         this->ptr[index]->showInfo();
                         ++cnt;
                     }
-                    cout << "å…±æŸ¥æ‰¾åˆ°" << cnt << "æ¡è®°å½•" << endl;
+                    cout << "¹²²éÕÒµ½" << cnt << "Ìõ¼ÇÂ¼" << endl;
                 }
                 break;
             }
             else
             {
-                cout << "è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼š" << endl;
+                cout << "ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë£º" << endl;
             }
         }
     }
@@ -459,14 +459,14 @@ void workerManager::search_Emp()    //ä¸¤ç§æ–¹æ³•æŸ¥æ‰¾èŒå·¥
 
 void workerManager::sortByName(int flag)
 {
-    if(flag==1)                     //é™åº
+    if(flag==1)                     //½µĞò
     {
         for (int i = 0; i < this->emp_num ; i++)
         {
             int index = i;
             for (int j = i+1; j < this->emp_num;j++)
             {
-                if (this->ptr[index]->m_name > this->ptr[j]->m_name)     //å­—æ¯è¡¨é™åº
+                if (this->ptr[index]->m_name > this->ptr[j]->m_name)     //×ÖÄ¸±í½µĞò
                 {
                     index = j;
                 }
@@ -489,7 +489,7 @@ void workerManager::sortByName(int flag)
             int index = i;
             for (int j = i+1; j < this->emp_num;j++)
             {
-                if (this->ptr[index]->m_name < this->ptr[j]->m_name)     //å­—æ¯è¡¨å‡åº
+                if (this->ptr[index]->m_name < this->ptr[j]->m_name)     //×ÖÄ¸±íÉıĞò
                 {
                     index = j;
                 }
@@ -516,7 +516,7 @@ void workerManager::sortByID(int flag)
             int index = i;
             for (int j = i+1; j < this->emp_num;j++)
             {
-                if (this->ptr[index]->m_id < this->ptr[j]->m_id)     //å­—æ¯è¡¨é™åº
+                if (this->ptr[index]->m_id < this->ptr[j]->m_id)     //×ÖÄ¸±í½µĞò
                 {
                     index = j;
                 }
@@ -539,7 +539,7 @@ void workerManager::sortByID(int flag)
             int index = i;
             for (int j = i+1; j < this->emp_num;j++)
             {
-                if (this->ptr[index]->m_id > this->ptr[j]->m_id)     //å­—æ¯è¡¨å‡åº
+                if (this->ptr[index]->m_id > this->ptr[j]->m_id)     //×ÖÄ¸±íÉıĞò
                 {
                     index = j;
                 }
@@ -561,34 +561,34 @@ void workerManager::sort_Emp()
 {
     if(this->m_isFileEmpty)
     {
-        cout << "æ–‡ä»¶ä¸ºç©ºï¼" << endl;
+        cout << "ÎÄ¼şÎª¿Õ£¡" << endl;
     }
     else
     {
-        cout << "è¯·è¾“å…¥æ’åºæ–¹å¼ï¼š" << endl
-             << "1.å§“åæ’åº" << endl
-             << "2.ç¼–å·æ’åº" << endl;
+        cout << "ÇëÊäÈëÅÅĞò·½Ê½£º" << endl
+             << "1.ĞÕÃûÅÅĞò" << endl
+             << "2.±àºÅÅÅĞò" << endl;
         int mk;
         while(cin>>mk)
         {
             if(mk!=1&&mk!=2)
             {
-                cout << "è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼š" << endl;
+                cout << "ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë£º" << endl;
             }
             else
                 break;
         }
 
 
-        cout << "è¯·è¾“å…¥ï¼š" << endl
-             << "1.é™åº" << endl
-             << "2.å‡åº" << endl;
+        cout << "ÇëÊäÈë£º" << endl
+             << "1.½µĞò" << endl
+             << "2.ÉıĞò" << endl;
         int fl;
         while(cin>>fl)
         {
             if(fl!=1&&fl!=2)
             {
-                cout << "è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼š" << endl;
+                cout << "ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë£º" << endl;
             }
             else
                 break;
@@ -604,7 +604,7 @@ void workerManager::sort_Emp()
             {
                 this->sortByID(fl);
             }
-            cout << "æ’åºå®Œæˆï¼" << endl;
+            cout << "ÅÅĞòÍê³É£¡" << endl;
         }
     }
     system("pause");
@@ -615,7 +615,7 @@ void workerManager::fileClear()
 {
     ofstream ofs;
     ofs.open(FNAME, ios::trunc);
-    ofs.close();                    //æ–‡ä»¶æ¸…ç©º
+    ofs.close();                    //ÎÄ¼şÇå¿Õ
 
     if(this->ptr!=NULL)
     {
@@ -633,19 +633,19 @@ void workerManager::fileClear()
         this->m_isFileEmpty = true;
     }
 
-    cout << "æ–‡ä»¶å·²æ¸…ç©ºï¼" << endl;
+    cout << "ÎÄ¼şÒÑÇå¿Õ£¡" << endl;
     system("pause");
     system("cls");
 }
 
-workerManager::~workerManager()     //ææ„å‡½æ•°ç©ºå®ç°
+workerManager::~workerManager()     //Îö¹¹º¯Êı¿ÕÊµÏÖ
 {
     if(this->ptr!=NULL)
     {
         delete [] this->ptr;
         this->ptr=NULL;
     }
-    //æ‰‹åŠ¨é‡Šæ”¾å †åŒºæ•°æ®
+    //ÊÖ¶¯ÊÍ·Å¶ÑÇøÊı¾İ
 
 
 }

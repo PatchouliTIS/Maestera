@@ -10,10 +10,10 @@ int PartitionII(int a[] , int low , int high)
     {
         if(a[j] < pivot)
         {
-            ++i;                                        //iå…ˆè¿›æ­¥
-            swap(a[i], a[j]);                           //äº¤æ¢
+            ++i;                                        //iÏÈ½ø²½
+            swap(a[i], a[j]);                           //½»»»
         }
-    }                                                   //x<=içš„ä½ç½®å‡çœ‹åšæ˜¯å°äºŽpivotçš„å€¼
+    }                                                   //x<=iµÄÎ»ÖÃ¾ù¿´×öÊÇÐ¡ÓÚpivotµÄÖµ
     swap(a[i], a[low]);
 
     return i;

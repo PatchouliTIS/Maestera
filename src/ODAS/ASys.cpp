@@ -14,7 +14,7 @@ void ASys::initSpeech()
     this->vVictory.clear();
     this->map_Spkr.clear();
 
-    this->m_Round = 1;      //é‡ç½®æ¯”èµ›ä¸ºç¬¬ä¸€è½®
+    this->m_Round = 1;      //ÖØÖÃ±ÈÈüÎªµÚÒ»ÂÖ
 }
 
 void ASys::create_Spkr()
@@ -23,7 +23,7 @@ void ASys::create_Spkr()
     for (int i = 0; i < 12; i++)
     {
         Speaker sp;
-        string name = "é€‰æ‰‹";
+        string name = "Ñ¡ÊÖ";
         name += name_seed[i];
         sp.m_name = name;
 
@@ -40,17 +40,18 @@ void ASys::create_Spkr()
 void ASys::show_menu()
 {  
     cout<<"**********************************"<<endl;
-    cout<<"******æ¬¢è¿ä½¿ç”¨è¾©è®ºèµ›ç®¡ç†ç³»ç»Ÿ******"<<endl;
-    cout<<"**********0.é€€å‡ºæ¯”èµ›ç¨‹åº**********"<<endl;
-    cout<<"**********1.å¼€å§‹æ¼”è®²æ¯”èµ›**********"<<endl;
-    cout<<"**********2.æŸ¥çœ‹å¾€å±Šè®°å½•**********"<<endl;
-    cout<<"**********3.æ¸…ç©ºæ¼”è®²æ¯”èµ›**********"<<endl;
+    cout<<"******»¶Ó­Ê¹ÓÃ±çÂÛÈü¹ÜÀíÏµÍ³******"<<endl;
+    cout<<"**********0.ÍË³ö±ÈÈü³ÌĞò**********"<<endl;
+    cout<<"**********1.¿ªÊ¼Ñİ½²±ÈÈü**********"<<endl;
+    cout<<"**********2.²é¿´Íù½ì¼ÇÂ¼**********"<<endl;
+    cout<<"**********3.Çå¿ÕÑİ½²±ÈÈü**********"<<endl;
+    cout<<"**********************************"<<endl;
     cout<<endl;
 }
 
 void ASys::start_Spch()
 {
-    cout << "ç¬¬" << this->m_Round << "è½®å°ç»„æ¯”èµ›æˆå‘˜æ­£åœ¨æŠ½ç­¾:" << endl;
+    cout << "µÚ" << this->m_Round << "ÂÖĞ¡×é±ÈÈü³ÉÔ±ÕıÔÚ³éÇ©:" << endl;
     cout << "-------------------------------------" << endl;
     if(this->m_Round==1)
     {
@@ -72,13 +73,13 @@ void ASys::start_Spch()
         }
     }
     cout << "----------------------------------" << endl;
-    cout << "æŠ½ç­¾å®Œæ¯•ï¼Œå‡†å¤‡æ¯”èµ›ï¼" << endl;
+    cout << "³éÇ©Íê±Ï£¬×¼±¸±ÈÈü£¡" << endl;
     system("pause");
 }
 
 void ASys::quitSys()
 {
-    cout << "æ¬¢è¿ä¸‹æ¬¡ä½¿ç”¨ï¼" << endl;
+    cout << "»¶Ó­ÏÂ´ÎÊ¹ÓÃ£¡" << endl;
     exit(0);
 }
 

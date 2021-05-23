@@ -7,8 +7,8 @@
 			"command": "E:\\MinGW\\mingw64\\bin\\g++.exe",
 			"args": [
 				"-g",
-				"${workspaceFolder}/src/testProgramme/main.cpp",
-				//"${workspaceFolder}/src/ODAS/ASys.cpp",
+				"${workspaceFolder}/src/ODAS/main.cpp",
+				"${workspaceFolder}/src/ODAS/ASys.cpp",
 				"-I",
 				"${workspaceFolder}/header",
 				"-o",
@@ -20,8 +20,11 @@
 			"problemMatcher": [
 				"$gcc"
 			],
-			"group": "build",
-			"detail": "编译器: E:\\MinGW\\mingw64\\bin\\g++.exe"
+			"group": {
+                "kind": "build",
+                "isDefault": true
+            },
+			"detail": "调试器生成的任务。"
 		}
 	]
 }
