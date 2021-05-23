@@ -1,19 +1,14 @@
-#include "swap.h"
-#include "QuickSort.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 
-void print(int *a, int len)
-{
-    for (int i = 0; i < len;i++)
-    {
-        cout << a[i] << " ";
-    }
-    cout << endl;
-}
 
 int main(){
-    int a[6] = {3, 10, 89, 38, 7, 40};
-    QuickSort(a, 0, 5);
-    print(a, 6);
+    int i = 9;
+    printf("%d %d %d\n", i++, --i, i++);
+    i = 9;
+    printf("%d\n", i++);
+    printf("%d\n", --i);
+    printf("%d\n", i++);
     return 0;
 }
