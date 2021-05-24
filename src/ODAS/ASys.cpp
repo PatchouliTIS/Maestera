@@ -5,8 +5,9 @@ ASys::ASys()
     this->initSpeech();
 
     this->create_Spkr();
-}
 
+    this->load_file();
+}
 
 void ASys::initSpeech()
 {
@@ -14,6 +15,7 @@ void ASys::initSpeech()
     this->v_r2.clear();
     this->vVictory.clear();
     this->map_Spkr.clear();
+    this->m_Record.clear();
 
     this->m_Round = 1;      //重置比赛为第一轮
 }
@@ -106,7 +108,7 @@ void ASys::speechCommence()
     }
 
     
-    
+    //遍历所有参赛选手
     for (vector<int>::iterator it = tmp.begin(); it != tmp.end();it++)
     {
         cnt++;      //统计人数
@@ -125,7 +127,7 @@ void ASys::speechCommence()
         scrTp.pop_front();        //去掉最低分
 
         double sum = accumulate(scrTp.begin(), scrTp.end(), 0.0f);
-        double avg = sum / (double)10;
+        double avg = sum / 10;
 
         //当前选手的平均分
         this->map_Spkr[*it].m_score[this->m_Round - 1] = avg;
@@ -163,6 +165,7 @@ void ASys::speechCommence()
             }
 
             scr_Index.clear();      //重置辅助map，为下一轮6人比较做准备
+            
             cout << endl;
         }
     }
@@ -230,6 +233,22 @@ void ASys::start_speech()
 
     //保存胜利者结果
     this->save_file();
+
+    //重置管理类容器内容，使其可以进行下一次比赛
+    this->initSpeech();
+
+    this->create_Spkr();
+
+    this->load_file();
+
+    
+
+    cout << "*****************" << endl;
+    cout << "本届比赛成功举行！" << endl;
+
+
+    system("pause");
+    system("cls");
 }
 
 void ASys::save_file()
@@ -240,7 +259,7 @@ void ASys::save_file()
     for (vector<int>::iterator it = this->vVictory.begin(); it != this->vVictory.end();it++)
     {
         ofs << *it << ","
-            << this->map_Spkr[*it].m_name << ",";
+            << this->map_Spkr[*it].m_score[1] << ",";
     }
     ofs << endl;
 
@@ -250,6 +269,136 @@ void ASys::save_file()
     system("pause");
     system("cls");
     this->show_menu();
+    this->isFileEmpty = false;
+}
+
+void ASys::load_file()
+{
+    ifstream ifs;
+    ifs.open(FILENAME, ios::in);
+    
+    if(!ifs.is_open())
+    {
+        cout << "--------------------------" << endl;
+        cout << "文件不存在，初始化文件中……" << endl;
+        this->isFileEmpty = true;
+        system("pause");
+        system("cls");
+        return;
+    }
+
+    char ch;
+    ifs >> ch;
+    if(ifs.eof())
+    {
+        cout << "--------------------------" << endl;
+        cout << "当前文件为空！" << endl;
+        this->isFileEmpty = true;
+        system("pause");
+        system("cls");
+        return;
+    }
+
+    //文件存在且非空，开始录入数据
+    this->isFileEmpty = false;
+    ifs.putback(ch);
+
+    int index = 1;
+    string tmp;
+
+    vector<string> v;
+    while (ifs >> tmp)          //读入数据时，string录到\n时停止，跳到下一行
+    {
+        
+
+
+        v.clear();
+        int start = 0;
+        int pos;
+        while(1)
+        {
+            pos = tmp.find(",", start);
+            if (pos == -1)
+            {
+                break;
+            }
+            else
+            {
+                string vp = tmp.substr(start, pos-start);
+                v.push_back(vp);
+                start = pos + 1;
+            }
+        }
+
+        this->m_Record.insert(make_pair(index, v));
+        index++;
+    }
+
+    ifs.close();
+}
+
+void ASys::show_Record()
+{
+    if(this->isFileEmpty)
+    {
+        cout << "文件为空！" << endl;
+        return;
+    }
+
+    for (map<int, vector<string>>::iterator it = this->m_Record.begin(); it != this->m_Record.end();it++)
+    {
+        cout << "第" << it->first << "届获奖名单为:" << endl;
+        cout << "冠军————"
+             << "编号：" << it->second[0] << "   "
+             << "分数：" << it->second[1] << endl;
+        cout << "亚军————"
+             << "编号：" << it->second[2] << "   "
+             << "分数：" << it->second[3] << endl;             
+        cout << "季军————"
+             << "编号：" << it->second[4] << "   "
+             << "分数：" << it->second[5] << endl;
+        cout << "----------------------------" << endl;
+    }
+
+    system("pause");
+    system("cls");
+}
+
+void ASys::clr_Record()
+{
+    cout << "清空数据？（y/n）" << endl;
+    while(1)
+    {
+        char ch;
+        cin >> ch;
+        fflush(stdin);
+        if (ch == 'y'||ch=='Y')
+        {
+                ofstream ofs;
+                ofs.open(FILENAME, ios::trunc);
+                ofs.close();
+
+                this->initSpeech();
+
+                this->create_Spkr();
+
+                this->load_file();
+
+                cout << "清空成功！" << endl;
+                break;
+        }
+        else if(ch=='n'||ch=='N')
+        {
+            cout << "操作取消，返回主菜单" << endl;
+            break;
+        }
+        else
+        {
+            cout << "输入错误！请重新输入：" << endl;
+        }
+    }
+    system("pause");
+    system("cls");
 }
 
 ASys::~ASys()

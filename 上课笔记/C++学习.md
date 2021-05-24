@@ -26,9 +26,14 @@ ofs.close();        //关闭文件
 ```
 
 打开方式分类：
-
-
-
+|打开方式代码|解释|
+|:--:|:--:|:--:|
+|ios::in|读文件|
+|ios::out|写文件|
+|ios::app|在文件尾部续写文件|
+|ios::trunc|若文件存在，删除并重新建立空文件|
+|ios::ate|打开在文件尾部|
+|ios::binar|以二进制方式打开文件|
 
 
 ### 5.1.2 读文件
@@ -49,12 +54,12 @@ if(!ifs.is_open()){
 
 //1.
 char buf[1024]={0};
-while(ifs>>buf){
+while(ifs>>buf){        //读完一行遇到换行符/n则中断输入，转为下一行
     cout<<buf<<endl;
 }  //读取数据方法1；
 //2.
-while(ifs.getline(buf,sizeof(buf))){
-    cout<<buf<<endl;
+while(ifs.getline(buf,sizeof(buf))){    //ifs的成员函数ifs.getline(const char*,const _INT max_size)
+    cout<<buf<<endl; 
 }   //读取数据方法2；
 //3.string类读入
 string buf;
@@ -64,7 +69,7 @@ while(getline(ifs,buf)){
 //4.单字符读入
 char c;
 while((c=ifs.get())!=EOF){
-    cout<<c<<endl;
+    cout<<c;
 }
 
 
@@ -86,6 +91,44 @@ ofstream ofs("filePath",ios::out|ios::binary);      //写文件，直接调用�
 Person P;
 P->name=....             //创建临时的变量用来改写文件内的人物类数据
 
+
+//ofs.write(const char*这里是地址,int len这里是目标长度)
+ofs.write((const char*)&P,sizeof(Person));
+
+
+
+ofs.close();
+```
+
+
+### 5.2.2 读文件
+
+读文件步骤:
+``` c++
+#include<fstream>   //包含文件操作头文件
+
+ifstream ifs;       //创建文件流对象,fstream也可以
+
+
+ifs.open(filePath,ios::ifs|ios::binary)
+{
+    if(!ifs.is_open()){
+        cout<<"打开失败";
+        return 0;
+    }             //判断是否打开文件成功
+
+    Person P;       //将要读取的目标数据类型
+
+    ifs.read((char*)&P,sizeof(Person));
+
+    cout<<P.m_name.....<<endl;
+
+
+
+
+
+    ifs.close();        //关闭文件
+}
 ```
 
 # 6. 模板

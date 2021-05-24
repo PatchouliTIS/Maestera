@@ -54,7 +54,8 @@
       "regex": "cpp",
       "xutility": "cpp",
       "valarray": "cpp",
-      "iosfwd": "cpp"
+      "iosfwd": "cpp",
+      "utility": "cpp"
     },
     "C_Cpp.intelliSenseEngine": "Tag Parser",
     "code-runner.runInTerminal": true,

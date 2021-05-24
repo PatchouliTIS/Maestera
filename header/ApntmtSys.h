@@ -3,6 +3,7 @@
 #include<string>
 #include<bits/stdc++.h>
 #include<fstream>
+#include<stdlib.h>
 #define FILENAME "C:/Users/ASUS/Desktop/Maestera/out/speech.csv"
 #include "Speaker.h"
 
@@ -22,9 +23,9 @@ public:
 
     int m_Round;                //当前比赛轮次
 
+    bool isFileEmpty;           //文件是否为空
 
-
-    
+    map<int, vector<string>> m_Record; //记录文件数据
 
     ASys();
 
@@ -45,6 +46,12 @@ public:
     void start_speech();
 
     void save_file();
+
+    void load_file();
+
+    void show_Record();
+
+    void clr_Record();
 
     ~ASys();
 

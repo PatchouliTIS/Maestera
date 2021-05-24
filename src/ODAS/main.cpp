@@ -1,8 +1,11 @@
 #include "ApntmtSys.h"
+#include<ctime>
 // #define TEST 1
 
 int main()
 {
+
+    srand((unsigned int)time(NULL));
     ASys as;
 #ifdef TEST
     for (map<int, Speaker>::iterator it = as.map_Spkr.begin(); it != as.map_Spkr.end();it++)
@@ -25,11 +28,11 @@ int main()
                 as.start_speech();
                 break;
             case 2:         //查看记录
-                as.save_file();
+                as.show_Record();
                 break;
             case 3:        //清空记录
+                as.clr_Record();
                 break;
-
             default:
                 cout << "输入错误！请重新输入：" << endl;
                 system("pause");
