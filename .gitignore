@@ -35,5 +35,6 @@
 #files
 /out/*
 /graph/*
+/.vscode/*
 
 

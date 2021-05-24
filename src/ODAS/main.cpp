@@ -1,5 +1,5 @@
 #include "ApntmtSys.h"
-#define TEST 1
+// #define TEST 1
 
 int main()
 {
@@ -22,17 +22,20 @@ int main()
                 as.quitSys();
                 break;
             case 1:         //开始比赛
-                as.start_Spch();
+                as.start_speech();
                 break;
             case 2:         //查看记录
+                as.show_Outcome();
                 break;
             case 3:        //清空记录
                 break;
 
-                default:
-                system("cls");
+            default:
+                cout << "输入错误！请重新输入：" << endl;
+                system("pause");
                 break;
         }
+        system("cls");
     }
     return 0;
 }

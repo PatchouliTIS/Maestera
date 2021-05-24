@@ -30,11 +30,17 @@ public:
 
     void show_menu();
 
+    void show_Outcome();
+
     void create_Spkr();
 
-    void start_Spch();
+    void draw_Spch();
+
+    void speechCommence();
 
     void quitSys();
+
+    void start_speech();
 
     ~ASys();
 

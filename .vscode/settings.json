@@ -52,7 +52,8 @@
       "set": "cpp",
       "initializer_list": "cpp",
       "regex": "cpp",
-      "xutility": "cpp"
+      "xutility": "cpp",
+      "valarray": "cpp"
     },
     "C_Cpp.intelliSenseEngine": "Tag Parser",
     "code-runner.runInTerminal": true,
