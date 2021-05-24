@@ -53,7 +53,8 @@
       "initializer_list": "cpp",
       "regex": "cpp",
       "xutility": "cpp",
-      "valarray": "cpp"
+      "valarray": "cpp",
+      "iosfwd": "cpp"
     },
     "C_Cpp.intelliSenseEngine": "Tag Parser",
     "code-runner.runInTerminal": true,

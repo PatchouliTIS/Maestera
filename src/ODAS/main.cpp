@@ -25,7 +25,7 @@ int main()
                 as.start_speech();
                 break;
             case 2:         //查看记录
-                as.show_Outcome();
+                as.save_file();
                 break;
             case 3:        //清空记录
                 break;

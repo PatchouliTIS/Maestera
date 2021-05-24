@@ -226,6 +226,30 @@ void ASys::start_speech()
 
     //显示结果
     this->show_Outcome();
+
+
+    //保存胜利者结果
+    this->save_file();
+}
+
+void ASys::save_file()
+{
+    ofstream ofs;
+    ofs.open(FILENAME, ios::out | ios::app);
+
+    for (vector<int>::iterator it = this->vVictory.begin(); it != this->vVictory.end();it++)
+    {
+        ofs << *it << ","
+            << this->map_Spkr[*it].m_name << ",";
+    }
+    ofs << endl;
+
+    ofs.close();
+    cout << "----------------------------" << endl;
+    cout << "文件保存成功！" << endl;
+    system("pause");
+    system("cls");
+    this->show_menu();
 }
 
 ASys::~ASys()

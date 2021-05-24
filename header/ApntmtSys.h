@@ -2,6 +2,8 @@
 #include<iostream>
 #include<string>
 #include<bits/stdc++.h>
+#include<fstream>
+#define FILENAME "C:/Users/ASUS/Desktop/Maestera/out/speech.csv"
 #include "Speaker.h"
 
 using namespace std;
@@ -41,6 +43,8 @@ public:
     void quitSys();
 
     void start_speech();
+
+    void save_file();
 
     ~ASys();
 
