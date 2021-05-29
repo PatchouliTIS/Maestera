@@ -1,9 +1,10 @@
 #pragma once
 #include<bits/stdc++.h>
+#include "login_File.h"
 #include "ID.h"
 using namespace std;
 
-class Adm
+class Adm:public ID
 {
 public:
     Adm();
@@ -18,6 +19,13 @@ public:
 
     void showPC();
 
+    void showRcrd();
+
     void clearRcrd();
 
+    void initVector();
+
+private:
+    vector<student> vStu;
+    vector<teacher> vTchr;
 };

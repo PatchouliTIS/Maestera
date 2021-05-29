@@ -7,8 +7,10 @@
 			"command": "E:\\MinGW\\mingw64\\bin\\g++.exe",
 			"args": [
 				"-g",
-				"${workspaceFolder}/src/ODAS/main.cpp",
-				"${workspaceFolder}/src/ODAS/ASys.cpp",
+				"${workspaceFolder}/src/RegisterSys/main.cpp",
+				"${workspaceFolder}/src/RegisterSys/Adm.cpp",
+				"${workspaceFolder}/src/RegisterSys/teacher.cpp",
+				"${workspaceFolder}/src/RegisterSys/student.cpp",
 				"-I",
 				"${workspaceFolder}/header",
 				"-o",
