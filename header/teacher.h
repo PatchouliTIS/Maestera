@@ -17,6 +17,7 @@ public:
 
     void validOrder();
 
-private:
+    vector<CPT> vCPT;
+
     int m_Tid;
 };

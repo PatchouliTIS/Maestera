@@ -25,7 +25,9 @@ public:
 
     void initVector();
 
-private:
+    bool checkRepeat(int id, int type);
+
     vector<student> vStu;
     vector<teacher> vTchr;
+    vector<CPT> vCPT;
 };

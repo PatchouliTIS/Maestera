@@ -20,7 +20,11 @@ public:
 
     void cancelOrder();
 
-private:
+    void initVector();
+
+
     int m_Sid;
+
+    vector<CPT> vCPT;
 };
 
