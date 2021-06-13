@@ -2,6 +2,9 @@
 #include<bits/stdc++.h>
 #include "login_File.h"
 #include "ID.h"
+#include "CPT.h"
+#include "student.h"
+#include "teacher.h"
 using namespace std;
 
 class Adm:public ID

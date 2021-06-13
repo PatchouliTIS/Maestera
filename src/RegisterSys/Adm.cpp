@@ -49,16 +49,16 @@ void Adm::addID()
         int flag,mk=1;
         while(mk)
         {
-            cin >> flag;
+            cin >> flag;        //选择添加的账号类型
             switch(flag)
             {
-                case 1:
-                    filename = Stu_FILE;
+                case 1:         //老师
+                    filename = Std_FILE;
                     tip = "请输入学号：";
                     errortip = "学号重复！请重新输入：";
                     mk = 0;
                     break;
-                case 2:
+                case 2:         //学生
                     filename = Tch_FILE;
                     tip = "请输入职工号：";
                     errortip = "职工号重复！请重新输入：";
@@ -83,9 +83,9 @@ void Adm::addID()
         }
 
         cout << tip << endl;
-        cin >> id;
+        cin >> id;              //输入账号名称
         //去重操作
-        while(!this->checkRepeat(id,flag))
+        while(!this->checkRepeat(id,flag))      //顺序遍历查找
         {
             cout << errortip << endl;
             cin >> id;
@@ -116,58 +116,66 @@ void Adm::addID()
             if(ch=='N'||ch=='n')
             {
                 cout << "添加成功，返回上级菜单" << endl;
-                system("cls");
                 system("pause");
+                system("cls");
                 return;
             }
             else if(ch!='Y'||ch!='y')
             {
-                cout << "输入错误，请重新输入：" << endl;
+                system("cls");
+                fflush(stdin);
+                break;
             }
             else
             {   
-                system("cls");
-                break;
+                cout << "输入错误，请重新输入：" << endl;
+                system("pause");
             }
             fflush(stdin);
         }
     }
 }
 
+
+//老师
+void printTchr(teacher & t)
+{
+    cout << "职工编号：" << t.m_Tid << "      "
+         << "职工账号：" << t.m_name << "      "
+         << "职工密码：" << t.m_pwd << endl;
+}
+
+//学生
+void printStu(student & s)
+{
+    cout << "学生编号：" << s.m_Sid << "      "
+         << "学生账号：" << s.m_name << "      "
+         << "学生密码：" << s.m_pwd << endl;
+}
+
+
 void Adm::showID()
 {
-    //全局函数
-    static void printStu(student & s)
-    {
-        cout << "学生编号：" << s.m_Sid << "      "
-             << "学生账号：" << s.m_name << "      "
-             << "学生密码：" << s.m_pwd << endl;
-    }
-
-    static void printTchr(teacher & t)
-    {
-        cout << "职工编号：" << t.m_Tid << "      "
-             << "职工账号：" << t.m_name << "      "
-             << "职工密码：" << t.m_pwd << endl;
-    }
-
+    //全局函数,输出数据
     cout << "请选择查看对象：" << endl
          << "1. 查看学生账号" << endl
          << "2. 查看老师账号" << endl;
 
-    int select;
+    int select,mk=1;
     cin >> select;
-    while(1)
+    while(mk)
     {
         switch(select)
         {
             case 1:
                 cout << "所有学生信息如下：" << endl;
                 for_each(vStu.begin(), vStu.end(), printStu);
+                mk = 0;
                 break;
             case 2:
                 cout << "所有老师信息如下：" << endl;
                 for_each(vTchr.begin(), vTchr.end(), printTchr);
+                mk = 0;
                 break;
             default:
                 cout << "输入错误！请重新输入：" << endl;
@@ -182,6 +190,9 @@ void Adm::showID()
 
 void Adm::showPC()
 {
+    //先在头文件里创建CPT.h  机房结构的头文件
+
+    //在Adm初始化文件中初始化vCPT容器，载入机房数据文件
     cout << "所有机房信息如下：" << endl;
     for (vector<CPT>::iterator it = this->vCPT.begin(); it != this->vCPT.end(); it++)
     {
@@ -207,7 +218,7 @@ void Adm::initVector()
 
     ifstream ifs;
     //1. 打开学生记录文件
-    ifs.open(Stu_FILE, ios::in);
+    ifs.open(Std_FILE, ios::in);
     if(!ifs.is_open())
     {
         cout << "文件不存在！返回上级菜单" << endl;
@@ -258,8 +269,6 @@ void Adm::initVector()
 
     return;
 }
-
-
 
 void Adm::clearRcrd()
 {

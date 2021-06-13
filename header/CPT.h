@@ -2,6 +2,8 @@
 #include<iostream>
 using namespace std;
 
+
+//存储机房信息结构
 class CPT
 {
 public:

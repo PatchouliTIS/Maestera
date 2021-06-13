@@ -27,14 +27,14 @@ int main()
         cout << "===============欢迎来到本宁堡机房预约系统===============" << endl;
         cout << "\t\t\tR L T W\n"
             << "\t\t ------------------------ \n"
-            << "\t\t|        1. 学生         |\n"
+            << "\t\t|        1. 学生          |\n"
+            << "\t\t|                         |\n"
+            << "\t\t|        2. 老师          |\n"
+            << "\t\t|                         |\n"
+            << "\t\t|       3. 管理员         |\n"
             << "\t\t|                        |\n"
-            << "\t\t|        2. 老师         |\n"
+            << "\t\t|      0. 退出系统        |\n"
             << "\t\t|                        |\n"
-            << "\t\t|       3. 管理员        |\n"
-            << "\t\t|                       |\n"
-            << "\t\t|      0. 退出系统       |\n"
-            << "\t\t|                       |\n"
             << "\t\t ------------------------ \n";
         cout << "请输入您的选择：" << endl;
         cin >> select ;
@@ -65,7 +65,7 @@ int main()
                 }
                 break;
             case 1:         //学生类调用
-                personCheck(Std_FILE, 1);
+                personCheck(Std_FILE, 1);       //初始化文件与管理类
                 break;
             case 2:         //老师类调用
                 personCheck(Tch_FILE, 2);
@@ -172,7 +172,7 @@ void stuMenu(ID *person)
                 {
                     if(ch=='Y'||ch=='y')
                     {
-                        delete adm;
+                        delete stu;
                         cout << "完成注销！返回上级菜单" << endl;
                         system("pause");
                         system("cls");
@@ -192,7 +192,7 @@ void stuMenu(ID *person)
                 break;
             case 1:
             //申请机器
-                stu->apllyOrder();
+                stu->applyOrder();
                 break;
             case 2:
             //查看我的申请记录
@@ -226,6 +226,7 @@ void personCheck(string filename, int type)
     ifstream ifs;
     ifs.open(filename, ios::in);//用于实现登录验证
 
+    //////////////检测机制//////////////////
     if(!ifs.is_open())
     {
         cout << "该文件不存在！" << endl;
@@ -239,6 +240,8 @@ void personCheck(string filename, int type)
         return;
     }
     ifs.putback(ch);
+    //////////////检测机制//////////////////
+
 
     //输入登录信息 
     int flag;
@@ -265,7 +268,7 @@ void personCheck(string filename, int type)
     cout << "请输入您的密码：" << endl;
     cin >> pwd;
 
-    //身份认证模块
+    ///////////////////身份认证模块////////////////////////
     if(type==1)
     {
         int sid;
