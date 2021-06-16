@@ -219,6 +219,63 @@ void stuMenu(ID *person)
     
 }
 
+void tchrMenu(ID *person)
+{
+    //类型强转
+    teacher *tchr= (teacher *)person;
+    while(1)
+    {    
+        tchr->show_menu();
+        int select;
+        cout << "请输入您的选择：" << endl;
+        cin >> select;
+        switch(select)
+        {
+            case 0:
+            //注销
+                cout << "确认注销：（Y/N）" << endl;
+                char ch;
+                fflush(stdin);
+                while(ch=getchar())
+                {
+                    if(ch=='Y'||ch=='y')
+                    {
+                        delete tchr;
+                        cout << "完成注销！返回上级菜单" << endl;
+                        system("pause");
+                        system("cls");
+                        return;
+                    }
+                    else if(ch=='N'||ch=='n')
+                    {
+                        cout << "确认取消，返回菜单中" << endl;
+                        break;
+                    }
+                    else
+                    {
+                        cout << "输入有误，请重新输入：" << endl;
+                    }
+                    fflush(stdin);
+                }
+                break;
+            case 1:
+            //查看所有申请记录
+                tchr->showAllOrder();
+                break;
+            case 2:
+            //审核申请
+                tchr->validOrder();
+                break;
+            default:
+                cout << "输入错误！" << endl;
+                break;
+        }
+    system("pause");
+    system("cls");
+
+    }
+}
+
 void personCheck(string filename, int type) 
 {
     ID *person = NULL;          //父类指针
@@ -305,7 +362,7 @@ void personCheck(string filename, int type)
                 //1. 创建人类对象，用一开始的person类
                 person = new teacher(sid,name, pwd);
                 //2. 进入子类菜单
-                
+                tchrMenu(person);
 
                 return;
             }
@@ -337,6 +394,8 @@ void personCheck(string filename, int type)
     }
 
     cout << "认证失败！即将返回主菜单" << endl;
+
+    fflush(stdin);
 
     system("pause");
     system("cls");

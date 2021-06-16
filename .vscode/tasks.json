@@ -11,6 +11,7 @@
 				"${workspaceFolder}/src/RegisterSys/Adm.cpp",
 				"${workspaceFolder}/src/RegisterSys/teacher.cpp",
 				"${workspaceFolder}/src/RegisterSys/student.cpp",
+				"${workspaceFolder}/src/RegisterSys/orderFile.cpp",
 				"-I",
 				"${workspaceFolder}/header",
 				"-o",

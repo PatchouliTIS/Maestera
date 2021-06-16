@@ -85,7 +85,7 @@ void Adm::addID()
         cout << tip << endl;
         cin >> id;              //输入账号名称
         //去重操作
-        while(!this->checkRepeat(id,flag))      //顺序遍历查找
+        while(this->checkRepeat(id,flag))      //顺序遍历查找
         {
             cout << errortip << endl;
             cin >> id;
@@ -290,10 +290,9 @@ bool Adm::checkRepeat(int id,int type)
         {
             if(id==it->m_Sid)
             {
-                return false;
+                return true;
             }
         }
-        return true;
     }
     else if(type == 2)
     {
@@ -301,9 +300,10 @@ bool Adm::checkRepeat(int id,int type)
         {
             if(id==it->m_Tid)
             {
-                return false;
+                return true;
             }
         }
-        return true;
     }
+
+    return false;
 }

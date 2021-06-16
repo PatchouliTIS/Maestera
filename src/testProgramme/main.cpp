@@ -150,3 +150,140 @@ int main()
     system("pause");
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    int n;
+    int min=INT_MIN;
+    int mod=1000000007;
+    vector<int> pathsWithMaxScore(vector<string>& board) {
+        n=board.size();
+
+        int *score=new int[n*n];
+        int *path=new int[n*n];
+
+        char **bd=new char* [n];
+
+        for(int i=0;i<n;i++)
+        {
+            bd[i]=new char[n];
+            for(int j=0;j<n;j++)
+            {
+                bd[i][j]=board[i][j];
+            }
+        }
+
+
+
+        for(int i=n-1;i>=0;i--)
+        {
+            for(int j=n-1;j>=0;j--)
+            {
+                int TAR=getID(i,j);
+                
+                if(i==n-1&&j==n-1)
+                {
+                    //score[TAR]=0;
+                    path[TAR]=1;
+                    continue;
+                }
+
+                if(bd[i][j]=='X')
+                {
+                    score[TAR]=min;
+                    //path[TAR]=0;
+                    continue;
+                }
+
+
+                int val;
+                if(i==0&&j==0)
+                {
+                    val=0;
+                }
+                else
+                {
+                    val=bd[i][j]-'0';
+                }
+
+                int s=min,p=0;
+
+                if(i+1<n)
+                {
+                    int curS=score[getID(i+1,j)]+val;
+                    int cnt=path[getID(i+1,j)];
+                    int* res=updateANS(curS,cnt,s,p);
+                    s=res[0];
+                    p=res[1];
+                }
+
+                if(j+1<n)
+                {
+                    int curS=score[getID(i,j+1)]+val;
+                    int cnt=path[getID(i,j+1)];
+                    int* res=updateANS(curS,cnt,s,p);
+                    s=res[0];
+                    p=res[1];
+                }
+
+                if(i+1<n&&j+1<n)
+                {
+                    int curS=score[getID(i+1,j+1)]+val;
+                    int cnt=path[getID(i+1,j+1)];
+                    int* res=updateANS(curS,cnt,s,p);
+                    s=res[0];
+                    p=res[1];
+                }
+
+
+                score[TAR]=s<0?min:s;
+                path[TAR]=p;
+                
+            }
+        }
+
+        vector<int> ans(2);
+
+        ans[0]=score[0]==min?0:score[0];
+        ans[1]=score[0]==min?0:path[0];
+
+        return ans;
+
+    }
+
+    int* updateANS(int cur,int cnt,int s,int p)
+    {
+        int *ans=new int[2];
+        ans[0]=s;
+        ans[1]=p;
+        if(cur==s&&cur!=min)
+        {
+            ans[0]=cur;
+            ans[1]+=cnt;
+        }
+        else if(cur>s)
+        {
+            ans[0]=cur;
+            ans[1]=cnt;
+        }
+
+        ans[1]%=mod;
+
+        return ans;
+    }
+
+    int getID(int x,int y)
+    {
+        return x*n+y;
+    }
+};
