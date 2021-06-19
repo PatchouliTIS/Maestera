@@ -1,4 +1,98 @@
+# 浙大《数据结构习题第二版》
 
+## 7.1 最大子序列
+### 1. 二分+归并
+```c++
+#include<iostream>
+
+using namespace std;
+
+
+int maxI(int a,int b,int c)
+{
+    return a>b?(a>c?a:c):(b>c?b:c);
+}
+
+int twoWayMerge(int a[],int head,int tail)
+{
+    
+    
+    if(head<=tail)
+    {
+        int mid=head+tail>>1;
+        int left=twoWayMerge(a,head,mid-1);
+        int right=twoWayMerge(a,mid+1,tail);
+        
+        int cur=0;
+        int max=0;
+        for(int i=mid;i<=tail;i++)
+        {
+            cur+=a[i];
+            max=max>=cur?max:cur;
+        }
+        max=max>=0?max:0;
+        cur=max;
+        for(int i=mid-1;i>=head;i--)
+        {
+            cur+=a[i];
+            max=max>=cur?max:cur;
+        }
+        max=max>=0?max:0;
+
+
+        return maxI(left,right,max);
+    }
+    else return 0;
+}
+
+
+int main()
+{
+    int len;
+    cin>>len;
+    int *nums=new int[len];
+    for(int i=0;i<len;i++)
+    {
+        cin>>nums[i];
+    }
+    int ans=twoWayMerge(nums,0,len-1);
+    cout<<ans<<endl;
+    return 0;
+}
+```
+
+
+### 2. 动态规划
+状态量：dp[i]表示以i下标为**尾部元素**的子序列的最大值，以此保证是连续的子序列。
+```c++
+#include<iostream>
+
+using namespace std;
+
+
+//
+
+int main()
+{
+    int len;
+    cin>>len;
+    int *nums=new int[len];
+    int *dp=new int[len+1];
+    dp[0]=0;
+    for(int i=0;i<len;i++)
+    {
+        cin>>nums[i];
+    }
+    int max=0;
+    for(int i=0;i<len;i++)
+    {
+        dp[i+1]=dp[i]+nums[i]>=0?dp[i]+nums[i]:0;
+        max=max<dp[i+1]?dp[i+1]:max;
+    }
+    cout<<max<<endl;
+    return 0;
+}
+```
 
 # 大数乘法
 
