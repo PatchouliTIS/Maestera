@@ -36,5 +36,5 @@
 /out/*
 /graph/*
 /.vscode/*
-
+*.pdf
 
