@@ -433,8 +433,6 @@ public:
 
 ### 300.最长递增子序列
 
-![image-20210423112900804](C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20210423112900804.png)
-
 ```c++
 //动态规划可解
 class Solution {
@@ -504,3 +502,186 @@ public:
 };
 ```
 
+
+
+
+##  广度优先搜索 BFS 
+
+### 725. 打开转盘锁
+
+https://leetcode-cn.com/problems/open-the-lock/
+
+```c++
+class Solution {
+private:
+    unordered_set<string> deadNums;     //哈希表记录死亡数字
+    
+    unordered_set<string> seen;         //哈希表记录已经访问的数字避免重复访问
+
+    queue<pair<string, int>> rcrd;
+
+    char num_prev(char& a)
+    {
+        return a=='0'?'9':a-1;
+    }
+
+    char num_succ(char& a)
+    {
+        return a=='9'?'0':a+1;
+    }
+
+    vector<string> get(string init)
+    {
+        vector<string> ret;
+        for(int i=0;i<4;++i)
+        {
+            char tmp=init[i];
+            init[i]=num_prev(tmp);
+            ret.push_back(init);
+            init[i]=num_succ(tmp);
+            ret.push_back(init);
+            init[i]=tmp;
+        }
+        return ret;
+
+    }
+
+    
+
+public:
+    int openLock(vector<string>& deadends, string target) {
+        deadNums.clear();
+        seen.clear();
+        seen.insert("0000");
+        rcrd.emplace("0000",0);
+
+
+        if(target=="0000") return 0;
+        for(auto& str : deadends)
+        {
+            deadNums.insert(str);
+        }
+        if(deadNums.count("0000")) return -1;
+
+        while(!rcrd.empty())
+        {
+            auto [tar, step] = rcrd.front();
+            rcrd.pop();
+            for(auto next_status : get(tar))
+            {
+                if(!seen.count(next_status)&&!deadNums.count(next_status))
+                {
+                    if(next_status==target)
+                    {
+                        return step+1;
+                    }
+                    rcrd.emplace(next_status, step+1);
+                    seen.insert(move(next_status));
+                }
+            }
+        }
+        return -1;
+
+    }
+};
+```
+
+### 127. 单词接龙
+
+**双向BFS的遍历**
+
+https://leetcode-cn.com/problems/word-ladder/
+
+```c++
+class Solution {
+private:
+    unordered_map<string,int> left;
+    queue<string> lq;
+
+    unordered_map<string,int> right;
+    queue<string> rq;
+    
+    unordered_set<string> wrdl;
+
+
+
+    int update(queue<string>& q, unordered_map<string,int>& cur, unordered_map<string,int>& other)
+    {
+        string ptr = q.front();
+        int len = ptr.length();
+        q.pop();
+
+        for(int i = 0 ; i < len ; ++i)
+        {
+            string tmp = ptr;
+            for(int j = 0 ; j < 26 ; ++j)
+            {
+                tmp[i] = 'a' + j ;
+                if(wrdl.count(tmp))
+                {
+                    if(cur.count(tmp)) continue;
+                    if(other.count(tmp)) 
+                    {
+                        return other[tmp]+cur[ptr]+1;
+                    }
+                    else
+                    {
+                        q.emplace(tmp);
+                        cur[tmp]=cur[ptr]+1;
+                    }
+                }
+            }
+        }
+        return -1;
+        
+    }
+
+
+
+    int bfs()
+    {
+        while(!lq.empty()&&!rq.empty())
+        {
+            int mk=-1;
+            if(lq.size()>rq.size())
+            {
+                mk=update(rq,right,left);
+            }
+            else
+            {
+                mk=update(lq,left,right);
+            }
+            if(mk!=-1) return mk;
+        }
+        return -1;
+    }
+
+
+
+public:
+    int ladderLength(string bW, string eW, vector<string>& wordList) {
+        left.clear();
+        right.clear();
+        wrdl.clear();
+        for(auto& str : wordList)
+        {
+            wrdl.insert(str);
+        }
+        if(!wrdl.count(eW)) return 0;
+
+
+
+        lq.emplace(bW);
+        rq.emplace(eW);
+        left[bW]=0;
+        right[eW]=0;
+
+        int ans=bfs();
+
+        
+        return ans==-1?0:ans+1;
+
+        
+    }
+};
+```
