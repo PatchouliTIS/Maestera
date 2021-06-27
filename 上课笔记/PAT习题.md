@@ -685,3 +685,67 @@ public:
     }
 };
 ```
+
+
+### 403. 青蛙过河
+
+**经典的错误**：记录重复的数据需要和queue中的数据构成一致
+
+本体中判重的根据是**位置**和**跳到该位置的步数**
+
+```c++
+bool seen[2042][2042];        //下标，步数
+class Solution {
+private:
+    queue<pair<int,int>> q;         //下标，步数
+    unordered_map<int,int> se;      //位置
+    bool bfs(vector<int> stones,int end)
+    {
+        q.emplace(make_pair(stones[0],0));
+        seen[stones[0]][0]=true;
+        while(!q.empty())
+        {
+            auto P = q.front();
+            q.pop();
+            int step = P.second;
+            int idx = P.first;
+
+            if (idx == end)
+                return true;
+            for(int i =-1;i<=1;i++)
+            {
+                int next_st = step+i;
+                int next_pos = next_st + stones[idx];
+                if(next_st<=0) continue;
+                if(se.count(next_pos))
+                {
+                    int next_idx = se[next_pos];
+                    if(next_idx==end) return true;
+                    if(!seen[next_idx][next_st])
+                    {
+                        seen[next_idx][next_st]=true;
+                        q.emplace(make_pair(next_idx,next_st));
+                    }
+                }
+            }
+
+        }
+        return false;
+    }
+
+
+public:
+    bool canCross(vector<int>& stones) {
+        se.clear();
+        memset(seen,0,sizeof(seen));
+        int len = stones.size();
+        for(int i = 0;i<len;i++)
+        {
+            se[stones[i]]=i;
+        }
+        int end = len-1;
+        bool ans = bfs(stones,end);
+        return ans;
+    }
+};
+```
