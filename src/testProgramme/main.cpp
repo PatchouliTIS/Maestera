@@ -2,74 +2,133 @@
 #include <stdlib.h>
 #include <bits/stdc++.h>
 #include <iostream>
+#define TEST 1
 
 using namespace std;
 
 class Solution {
 private:
-    queue<pair<int,int>> q;         //位置，步数
-    unordered_set<int> se;      //位置
-    bool bfs(int start,int end)
+    unordered_map <int,int> tarvisited;          //站台，步数
+    queue<pair<int,int>> tarq;                  //位置，站台
+
+    unordered_map<int,unordered_set<int>> mk;    //位置，站台
+
+    unordered_map <int,int> srcvisited;           //站台，步数
+    queue<pair<int,int>> srcq;                    //位置，站台
+
+    int bfs(vector<vector<int>> routes,queue<pair<int,int>>& cur, queue<pair<int,int>>& other, unordered_map <int,int>& curvsted ,unordered_map <int,int>& othervsted)
     {
-        q.emplace(make_pair(start,0));
-        while(!q.empty())
+        int all = cur.size();
+        int temp = -1;
+        while(all--)
         {
-            auto P = q.front();
-            q.pop();
-            int step = P.second;
-            int pos = P.first;
+            auto [pos,stat] = cur.front();
+            cur.pop();
 
-            cout << "本次弹出：" << endl
-                 << pos << ' ' << step << endl;
-
-            if (pos == end)
-                return true;
-            for(int i =-1;i<=1;i++)
+            int len = routes[stat].size();
+            if(othervsted.count(stat)) {
+                temp = temp>0?(temp>=othervsted[stat]?othervsted[stat]:temp):othervsted[stat];
+                cout << temp << "start" << endl;
+                }
+            for(int i = 0 ; i < len ; ++i)
             {
-                int next_st = step+i;
-                int next_pos = next_st + pos;
-                if(next_pos==end) return true;
-                if(next_pos>=0&&se.count(next_pos)&&next_pos!=pos)
+                
+                int next_pos = routes[stat][i];
+                if(next_pos==pos) continue;
+                for(auto next_stat : mk[next_pos])
                 {
-                    q.emplace(make_pair(next_pos,next_st));
-                    cout << "本次写入：" << endl
-                        << next_pos << ' ' << next_st << endl;
+                    if(next_stat==stat) continue;
+                    if(!curvsted.count(next_stat))
+                    {
+                        if(othervsted.count(next_stat)) {
+                            cout << othervsted[next_stat] << "   medium" << endl;
+                            temp = temp>0?(temp>=(othervsted[next_stat]+1)?(othervsted[next_stat]+1):temp):(othervsted[next_stat]+1);
+                            cout << temp << "   medium" << endl;
+                        }
+
+                        cur.emplace(make_pair(next_pos,next_stat));
+                        curvsted[next_stat]=curvsted[stat]+1;
+                    }
                 }
             }
-
         }
-        return false;
+
+        return temp;
     }
 
-
 public:
-    bool canCross(vector<int>& stones) {
-        se.clear();
-        int len = stones.size();
-        for(int i = 0;i<len;i++)
+    int numBusesToDestination(vector<vector<int>>& routes, int source, int target) {
+        int bus = routes.size();
+        if(source==target) return 0;
+        for(int i =0 ;  i<bus;++i)
         {
-            se.insert(stones[i]);
+            for(auto tar : routes[i])
+            {
+                mk[tar].insert(i);
+                if(tar==target)
+                {
+                    tarq.emplace(make_pair(tar,i));
+                    tarvisited[i]=1;
+                }
+                if(tar==source)
+                {
+                    srcq.emplace(make_pair(tar,i));
+                    srcvisited[i]=1;
+                }
+            }
         }
-        int end = stones[len-1];
-        bool ans = bfs(stones[0],end);
-        return ans;
+        int ans = -1;
+        while(!tarq.empty()&&!srcq.empty())
+        {
+            int tarlen = tarq.size();
+            int srclen = srcq.size();
+            if(tarlen>=srclen)
+            {
+                ans = bfs(routes,tarq,srcq,tarvisited,srcvisited);
+            }
+            else
+            {
+                ans = bfs(routes,srcq,tarq,srcvisited,tarvisited);
+            }
+            if(ans!=-1) return ans;
+        }
+        return -1;
     }
 };
 
 int main()
 {
     Solution S;
-    vector<int> T(8);
-    T[0] = 0;
-    T[1] = 1;
-    T[2] = 3;
-    T[3] = 6;
-    T[4] = 10;
-    T[5] = 13;
-    T[6] = 15;
-    T[7] = 18;
-    bool test = S.canCross(T);
+    // vector<int> a(2);
+    // a = {7, 12};
+    // vector<int> b(3);
+    // b = {4, 5, 15};
+    // vector<int> c(1);
+    // c = {6};
+    // vector<int> d(2);
+    // d = {15, 19};
+    // vector<int> e(3);
+    // e = {9, 12, 13};
+
+    // vector<vector<int>> T(5);
+    // T[0] = a;
+    // T[1] = b;
+    // T[2] = c;
+    // T[3] = d;
+    // T[4] = e;
+
+    vector<int> a(3);
+    a = {1, 2, 7};
+    vector<int> b(3);
+    b = {3, 6, 7};
+    vector<vector<int>> T(2);
+    T[0] = a;
+    T[1] = b;
+
+    int test = S.numBusesToDestination(T, 1, 6);
     cout << test << endl;
     system("pause");
     return 0;
 }
+
+
