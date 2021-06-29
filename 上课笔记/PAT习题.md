@@ -750,3 +750,50 @@ public:
 };
 ```
 
+### 815. 公交路线
+```c++
+class Solution {
+private:
+    unordered_map <int,int> tarvisited;          //路线，步数
+    queue<int> tarq;                                //路线
+
+    unordered_map<int,unordered_set<int>> mk;    //位置，路线
+
+
+public:
+    int numBusesToDestination(vector<vector<int>>& routes, int source, int target) {
+        int bus = routes.size();
+        if(source==target) return 0;
+        for(int i =0 ;  i<bus;++i)
+        {
+            for(auto tar : routes[i])
+            {
+                mk[tar].insert(i);
+                if(tar==target)
+                {
+                    tarq.emplace(i);
+                    tarvisited[i]=1;
+                }
+            }
+        }
+        while(!tarq.empty())
+        {
+            auto stat = tarq.front();
+            tarq.pop();
+            for(auto next_pos : routes[stat])
+            {
+                if(next_pos==source) return tarvisited[stat];
+                for(auto next_stat : mk[next_pos])
+                {
+                    if(!tarvisited[next_stat])
+                    {
+                        tarq.emplace(next_stat);
+                        tarvisited[next_stat]=tarvisited[stat]+1;
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+};
+```

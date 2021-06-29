@@ -27,8 +27,8 @@ private:
 
             int len = routes[stat].size();
             if(othervsted.count(stat)) {
-                temp = temp>0?(temp>=othervsted[stat]?othervsted[stat]:temp):othervsted[stat];
-                cout << temp << "start" << endl;
+                int endGame1 = othervsted[stat] + curvsted[stat] -1 ;
+                temp = temp>0?(temp>=endGame1?endGame1:temp):endGame1;
                 }
             for(int i = 0 ; i < len ; ++i)
             {
@@ -37,15 +37,15 @@ private:
                 if(next_pos==pos) continue;
                 for(auto next_stat : mk[next_pos])
                 {
-                    if(next_stat==stat) continue;
+                    if(next_stat==stat) {continue;}
+
+                    if(othervsted.count(next_stat)) 
+                    {
+                        int endGame2 = othervsted[next_stat] + curvsted[stat];
+                        temp = temp>0?(temp>=endGame2?endGame2:temp):endGame2;
+                    }
                     if(!curvsted.count(next_stat))
                     {
-                        if(othervsted.count(next_stat)) {
-                            cout << othervsted[next_stat] << "   medium" << endl;
-                            temp = temp>0?(temp>=(othervsted[next_stat]+1)?(othervsted[next_stat]+1):temp):(othervsted[next_stat]+1);
-                            cout << temp << "   medium" << endl;
-                        }
-
                         cur.emplace(make_pair(next_pos,next_stat));
                         curvsted[next_stat]=curvsted[stat]+1;
                     }
@@ -95,7 +95,6 @@ public:
         return -1;
     }
 };
-
 int main()
 {
     Solution S;
