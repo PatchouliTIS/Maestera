@@ -353,7 +353,7 @@ int main(){
 
 # LeetCode 习题
 
-## 二维前缀和系列
+## 一、 二维前缀和系列
 
 ### 303.  一维数组前缀和
 
@@ -429,7 +429,7 @@ public:
 };
 ```
 
-## 最长递增子序列
+## 二、 最长递增子序列
 
 ### 300.最长递增子序列
 
@@ -505,7 +505,7 @@ public:
 
 
 
-##  广度优先搜索 BFS 
+##  三、 广度优先搜索 BFS 
 
 ### 725. 打开转盘锁
 
@@ -794,6 +794,51 @@ public:
             }
         }
         return -1;
+    }
+};
+```
+
+
+## 四、 单调栈
+```c++
+class Solution {
+private:
+    stack<int> wader;
+    int ans = 0;
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int len = heights.size();
+
+        int left[len];
+        for(int i = 0 ; i < len ; ++i)
+        {
+            left[i]=-1;
+        }
+        int right[len];
+        for(int i = 0 ; i < len ; ++i)
+        {
+            right[i]=len-1;
+        }
+        //初始化
+
+
+        wader.push(0);
+        for(int i = 1 ; i < len ; ++i)
+        {
+            while(!wader.empty() && heights[i] < heights[wader.top()])
+            {
+                right[wader.top()] = i - 1;
+                wader.pop();
+            }
+            left[i] = wader.empty()?-1:wader.top();
+            wader.push(i);
+        }
+
+        for(int i = 0 ; i < len ; ++i)
+        {
+            ans = max(heights[i]*(right[i]-left[i]),ans);
+        }
+        return ans;
     }
 };
 ```
