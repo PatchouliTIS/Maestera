@@ -35,4 +35,5 @@
 #files
 /out/*
 /graph/*
+testProgramme/*
 /.vscode/*

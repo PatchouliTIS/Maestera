@@ -1,126 +1,74 @@
-
-
 #include <iostream>
 
 using namespace std;
 
-// class D
-// {
-// public:
-//     D(){cout<<"D()"<<endl;}
-//     ~D(){cout<<"~D()"<<endl;}
-// protected:
-//     int d;
-// };
 
-// class B:virtual public D
-// {
-// public:
-//     B(){cout<<"B()"<<endl;}
-//     ~B(){cout<<"~B()"<<endl;}
-// protected:
-//     int b;
-// };
-
-// class A:virtual public D
-// {
-// public:
-//     A(){cout<<"A()"<<endl;}
-//     ~A(){cout<<"~A()"<<endl;}
-// protected:
-//     int a;
-// };
-
-// class C:public B, public A
-// {
-// public:
-//     C(){cout<<"C()"<<endl;}
-//     ~C(){cout<<"~C()"<<endl;}
-// protected:
-//     int c;
-// };
-
-// class Base
-// {
-// public:
-//     Base() { cout << "Base_ctor" << endl; }
-//     ~Base() { cout << "Base_dtor" << endl; }
-// };
-
-// class
-
-// typedef struct{
-//     int ans;
-//     char *c;
-//     double b;
-
-// } SRU;
-
-class CA
-{
-public:
-virtual void f1()
-{
-    cout << "CA::f1" << endl;
-    f2();
-}
-virtual void f2()
-{
-cout << "CA::f2" << endl;
-}
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
 };
 
 
-class CB: public CA
-{
-public:
-void f1()
-{
-cout << "CB::f1" << endl;
-f2();
-}
-void f2()
-{
-cout << "CB::f2" << endl;
-}
-};
-
-class CC:public CB
-{
-public:
-    void f2()
+class Solution {
+private:
+    ListNode* curHead;
+    ListNode* rc(ListNode* head)
     {
-        cout << "CC:f2" << endl;
+        if(head->next == NULL || head == NULL)
+        {
+            curHead = head;
+            return head;
+        }
+        //取得已翻转链表的最后一个结点（尾结点）
+        ListNode* tmp = rc(head->next);
+        cout<<"取得已翻转链表的最后一个结点: "<<tmp->val<<endl;
+        //将尾结点的next指针域指向递归的当前节点head
+        tmp->next = head;
+        cout<<"将尾结点的next指针域指向递归的当前节点head; "<<head->val<<endl;
+        //当前节点的next指针域置为空，防止出现环
+        head->next = NULL;
+        return head;
+    }
+
+public:
+    ListNode* reverseList(ListNode* head) {
+        rc(head);
+        return curHead;
     }
 };
 
-struct 
+void printLink(ListNode* head)
 {
-    char a;
-    int b;
-    char c;
-} tru;
-
-struct
-{
-    int a : 1;
-    int b : 2;
-    int c : 5;
-} asu;
-
-#define N 2008
-
+    while(head != NULL)
+    {
+        cout << head->val << ' ';
+        head = head->next;
+    }
+    cout<<endl;
+}
 
 
 int main()
 {
-    double r = 1234.1254125;
-    int a, b, c;
-    int arr[N];
-    // printf("%6.5e\n%.5e\n%6e\n%.6e", r, r, r, r);
-    // scanf("%d%*d%d", &a, &b, &c);
-    printf("%d,  %d", sizeof(tru), sizeof(asu));
-    system("pause");
+    ListNode *head = new ListNode(0);
+    ListNode *tmp = head;
+    
 
+    for(int i = 1 ; i < 6 ; ++i)
+    {
+        ListNode *c = new ListNode(i);
+        tmp->next = c;
+        tmp = c;
+    }
+    printLink(head);
+
+    Solution S;
+
+    ListNode *reHead = S.reverseList(head);
+    printLink(reHead);
+
+    system("pause");
     return 0;
 }
+
