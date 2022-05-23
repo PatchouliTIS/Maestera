@@ -116,7 +116,8 @@
       "xstddef": "cpp",
       "xtr1common": "cpp",
       "charconv": "cpp",
-      "memory_resource": "cpp"
+      "memory_resource": "cpp",
+      "format": "cpp"
     },
     "C_Cpp.intelliSenseEngine": "Tag Parser",
     "code-runner.runInTerminal": true,
