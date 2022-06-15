@@ -7,7 +7,7 @@
             "command": "E:\\MinGW\\mingw64\\bin\\g++.exe",
             "args": [
                 "-g",
-                "${workspaceFolder}/src/testProgramme/HeapSort.cpp",
+                "${workspaceFolder}/src/testProgramme/main.cpp",
                 "-I",
                 "${workspaceFolder}/header",
                 "-o",
