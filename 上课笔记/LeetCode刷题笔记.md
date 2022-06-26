@@ -1,57 +1,8 @@
-# 基础算法练习
+# 一、 区间和问题：前缀和，树状数组与线段树
 
-## 条件表达式求三数最值
+## 前缀和问题
 
-条件表达式通项：$expA  ?  expB  :  expC$
-
-在$expA$中将两个数之间的最值与第三个数比较，所得的结果再与第三个数进行比较。一般来说$expA$就是$expC$的表达式。
-
-```c++
-int a, b, c;
-
-int max_among_three = (a > b ? a : b) > c ? (a > b ? a : b) : c;
-
-int min_among_three = (a < b ? a : b) < c ? (a < b ? a : b) : c;
-```
-
-
-## 数论
-
-### 质数问题
-
-**求质数个数**：线性探测法
-```c++
-int prime[N];       //保存n之前的所有质数
-bool status[N];      //保存n之前的性质，质数为0，非质数为1
-
-int primeCnt(int& a){
-    //trick:i * i <= a 在数值较大时容易溢出
-    int cnt = 0;
-    for(int i = 2; i <= a / i; ++i){
-        if(status[i] != 0){
-            prime[cnt++] = i;
-        }
-        //也就是prime[j] * i <= a
-        for(int j = 0; prime[j] <= a / i； ++j){
-            status[prime[j] * i] = true;    //使用prime[j] * i 的最小质因数prime[j]来确定是否是质数，这样不会出现重复过滤的情况，是线性的
-            if(i % prime[j] == 0) break;
-        }
-    }
-}
-
-```
-
-
-
-
-
-# LeetCode 习题
-
-## 一、 区间和问题：前缀和，树状数组与线段树
-
-### 前缀和问题
-
-#### 303.  一维数组前缀和
+### 303.  一维数组前缀和
 
 
 **数学思想：**
@@ -84,7 +35,7 @@ $$
 ```
 
 
-#### [396.旋转数组](https://leetcode-cn.com/problems/rotate-function/)
+### [396.旋转数组](https://leetcode-cn.com/problems/rotate-function/)
 
 ![题目](image/算法随笔/1650598279450.png)
 
@@ -135,7 +86,7 @@ public:
 };
 ```
 
-#### [304.  二维数组前缀和](https://leetcode.cn/problems/range-sum-query-2d-immutable/)
+### [304.  二维数组前缀和](https://leetcode.cn/problems/range-sum-query-2d-immutable/)
 
 
 ```c++
@@ -160,7 +111,7 @@ public:
 };
 ```
 
-#### [363.  矩形区域不超过K的最大数值和](https://leetcode.cn/problems/max-sum-of-rectangle-no-larger-than-k/)
+### [363.  矩形区域不超过K的最大数值和](https://leetcode.cn/problems/max-sum-of-rectangle-no-larger-than-k/)
 
 
 ```c++
@@ -209,7 +160,7 @@ public:
 };
 ```
 
-### 树状数组问题
+## 树状数组问题
 
 **特征：** 数组内元素经常发生变化，需要不停改变前缀和的值，因此将顺序的前缀和拆分成 ==*二叉树*== 的形式，减少更改sum数组元素所需的开销。
 
@@ -229,7 +180,7 @@ public:
   区间和是通过两个前缀和相减得到的值
   ![求区间和](image/算法随笔/1649047659180.png)
 
-#### [307. 区域和检索 - 数组可修改](https://leetcode.cn/problems/range-sum-query-mutable/)
+### [307. 区域和检索 - 数组可修改](https://leetcode.cn/problems/range-sum-query-mutable/)
 
 ```c++
 class NumArray {
@@ -307,13 +258,13 @@ public:
 
 
 
-### 正整数+零混合数组的前缀和与二分查找的结合
+## 正整数+零混合数组的前缀和与二分查找的结合
 
 **适用范围**：求数组的 ==**连续**子序列== 问题，要求**子序列的和**满足一定条件。
 
 **思路**：求出数列的前缀和后，因为是==自然数==数组，其前缀和必然是**单调增数组**，因此可以使用**二分查找**来以$o(logN)$的时间代价获得满足条件的连续子序列的前端位置。
 
-#### [剑指offer.008 和大于等于target的最短子数组](https://leetcode.cn/problems/2VG8Kg/)
+### [剑指offer.008 和大于等于target的最短子数组](https://leetcode.cn/problems/2VG8Kg/)
 
 ```c++
 class Solution {
@@ -353,14 +304,14 @@ public:
 
 
 
-### 正负整数混合数组的前缀和与哈希表的结合
+## 正负整数混合数组的前缀和与哈希表的结合
 
 **适用范围**：也是要求 ==**连续**子序列== 满足一定条件，但此时数组中出现==负数==。
 
 **思路**：数组中出现==负数==，因此前缀和**不满足单调增**这一特性，二分查找无法进行。此时我们使用 ==**哈希表**== 这一数据结构来保存前面统计过的前缀和，在$o(1)$代价下直接获得满足条件的子数组前端位置。
 
 
-#### [剑指offer.011 0和1个数相同的子数组](https://leetcode.cn/problems/A1NYOS/)
+### [剑指offer.011 0和1个数相同的子数组](https://leetcode.cn/problems/A1NYOS/)
 
 ```c++
 class Solution {
@@ -392,9 +343,9 @@ public:
 ```
 
 
-### 线段树
+## 线段树
 
-### 珂朵莉数(Old-Driver Tree)
+## 珂朵莉数(Old-Driver Tree)
 
 ```c++
 class RangeModule {
@@ -465,9 +416,9 @@ public:
 };
 ```
 
-## 二、 最长递增子序列
+# 二、 最长递增子序列
 
-### 300.最长递增子序列
+## 300.最长递增子序列
 
 ```c++
 //动态规划可解
@@ -496,7 +447,7 @@ public:
 };
 ```
 
-### 368.  最大整除子集
+## 368.  最大整除子集
 
 ```c++
 class Solution {
@@ -536,9 +487,9 @@ public:
 };
 ```
 
-## 三、 图的遍历算法（DFS、BFS）
+# 三、 图的遍历算法（DFS、BFS）
 
-### [417.大西洋太平洋水流问题](https://leetcode-cn.com/problems/pacific-atlantic-water-flow/)
+## [417.大西洋太平洋水流问题](https://leetcode-cn.com/problems/pacific-atlantic-water-flow/)
 
 **特征**：使用 **==逆向==深度优先搜索**，从图的边界开始向内部搜索。$visit1[]$和$visit2[]$用来记录**从两个海岸线开始遍历**的已遍历过的节点。
 
@@ -620,7 +571,7 @@ public:
 };
 ```
 
-### [725. 打开转盘锁](https://leetcode-cn.com/problems/open-the-lock/)
+## [725. 打开转盘锁](https://leetcode-cn.com/problems/open-the-lock/)
 
 ```c++
 class Solution {
@@ -697,7 +648,7 @@ public:
 };
 ```
 
-###  [127.单词接龙](https://leetcode-cn.com/problems/word-ladder/)
+##  [127.单词接龙](https://leetcode-cn.com/problems/word-ladder/)
 
 
 **单项BFS遍历**
@@ -881,7 +832,7 @@ public:
 };
 ```
 
-### [126. 单词接龙II](https://leetcode-cn.com/problems/word-ladder-ii/)
+## [126. 单词接龙II](https://leetcode-cn.com/problems/word-ladder-ii/)
 
 **特征：使用bfs遍历得到最短距离，使用dfs获得路径**
 
@@ -997,7 +948,7 @@ public:
 };
 ```
 
-### 403. 青蛙过河
+## 403. 青蛙过河
 
 **经典的错误**：记录重复的数据需要和queue中的数据构成一致
 
@@ -1060,7 +1011,7 @@ public:
 };
 ```
 
-### 815. 公交路线
+## 815. 公交路线
 
 ```c++
 class Solution {
@@ -1109,17 +1060,17 @@ public:
 };
 ```
 
-## 四、 单调栈
+# 四、 单调栈
 
-### 特点
+## 特点
 
 1. 要求保持原来数据的**相对位置**;
 2. 要求数据按照**非递增、非递减**等一定顺序排列
 
-### [单调栈军训题](https://leetcode-cn.com/problems/remove-duplicate-letters/solution/yi-zhao-chi-bian-li-kou-si-dao-ti-ma-ma-zai-ye-b-4/)
+## [单调栈军训题](https://leetcode-cn.com/problems/remove-duplicate-letters/solution/yi-zhao-chi-bian-li-kou-si-dao-ti-ma-ma-zai-ye-b-4/)
 
 
-### [84.柱状图中最大的矩形](https://leetcode-cn.com/problems/largest-rectangle-in-histogram/)
+## [84.柱状图中最大的矩形](https://leetcode-cn.com/problems/largest-rectangle-in-histogram/)
 
 ```c++
 class Solution {
@@ -1164,7 +1115,7 @@ public:
 };
 ```
 
-### [316.去除重复字母](https://leetcode-cn.com/problems/remove-duplicate-letters/)
+## [316.去除重复字母](https://leetcode-cn.com/problems/remove-duplicate-letters/)
 
 ```c++
 class Solution {
@@ -1213,7 +1164,7 @@ public:
 };
 ```
 
-### [402.移除k位数字](https://leetcode-cn.com/problems/remove-k-digits/)
+## [402.移除k位数字](https://leetcode-cn.com/problems/remove-k-digits/)
 
 ```c++
 class Solution {
@@ -1246,9 +1197,9 @@ public:
 };
 ```
 
-## 五、 桶排序
+# 五、 桶排序
 
-### 220. 存在重复元素III
+## 220. 存在重复元素III
 
 一般思路：用**有序集合**set保存**滑动窗口**内的数据，每次遍历到新的数则从set中取出**离下标$cur-t$最近的值**进行比较，如果该值处于$[cur-t,cur+t]$之间则返回true，若没有则将本次遍历到的数值加入set。
 
@@ -1331,9 +1282,9 @@ public:
 };
 ```
 
-## 六、 巧用哈希表
+# 六、 巧用哈希表
 
-### 1711. 大餐计数
+## 1711. 大餐计数
 
 - 用线性时间遍历数组-->哈希表
 - 用固定的时间代价寻找哈希表中与当前遍历到的元素的和属于2^n的元素个数
@@ -1380,11 +1331,11 @@ public:
 
 - 科学记数法定义出来的变量默认是double类型，而int和double无法做乘除运算。
 
-## 七、 双指针
+# 七、 双指针
 
 适用于处理**顺序数组**的情况。
 
-### 713. 乘积小于K的连续子数组
+## 713. 乘积小于K的连续子数组
 
 统计所有子序列的个数，用累加法
 
@@ -1428,17 +1379,17 @@ public:
 };
 ```
 
-### 15. 三数之和
+## 15. 三数之和
 
-### 16. 最近的三数之和
+## 16. 最近的三数之和
 
-### 20. 四数之和
+## 20. 四数之和
 
 **注意---->** 指针遍历时左右指针同时向中间靠拢，当遍历到合适的结果时**不要直接break** ，必须将当前顺序序列全部遍历完成。
 
-## 八、 常数空间层次遍历
+# 八、 常数空间层次遍历
 
-### 117. 填充每个节点的下一个节点
+## 117. 填充每个节点的下一个节点
 
 ```c++
 /*
@@ -1498,9 +1449,9 @@ public:
 };
 ```
 
-## 九、位运算专题
+# 九、位运算专题
 
-### 算法
+## 算法
 
 1. x&1
    每次将数值与1按位求解，得到当前x的最低位的值。
@@ -1543,9 +1494,9 @@ public:
     }
    ```
 
-### 实例
+## 实例
 
-#### [判断字符串中出现的字符是否唯一](https://leetcode-cn.com/problems/is-unique-lcci/)
+### [判断字符串中出现的字符是否唯一](https://leetcode-cn.com/problems/is-unique-lcci/)
 
 小写字符总共有26个，而一个整型变除去符号位以外共有31位。可以使用一个4Byte的整型变量来标记26个字符的情况。也就是**微型哈希表**。
 
@@ -1564,21 +1515,21 @@ public:
 };
 ```
 
-## 十、 贪心算法
+# 十、 贪心算法
 
-### 特征
+## 特征
 
 通过局部最优解简单相加得到最终结果，一般用于求解**最值问题**
 
 大多数问题在求解之前需要对既定数据进行**预处理**，比如排序。
 
-### 分配问题
+## 分配问题
 
-#### [135.Candy(Hard)](https://leetcode-cn.com/problems/candy/)
+### [135.Candy(Hard)](https://leetcode-cn.com/problems/candy/)
 
 固定位置的贪心算法，进行从右到左和从左到右两轮遍历即可。
 
-### 区间问题
+## 区间问题
 
 解决 ==**区间合并**== 与 ==**区间独立**== 的问题
 
@@ -1591,15 +1542,15 @@ sort(a.begin(),b.end(), [](vector<int>& a , vector<int>& b){
 ```
    
 
-## 十一、 二分查找算法
+# 十一、 二分查找算法
 
-### 特征
+## 特征
 
 一般是在一个**有序数组**中查找元素
 
 对于非有序数组，也可以使用二分查找，前提是必须满足**数组内的数据如果不满足条件A，则在分界点的一侧；满足A则在另一侧**这种形式
 
-### [540. 有序数组中的单一元素](https://leetcode-cn.com/problems/single-element-in-a-sorted-array/)
+## [540. 有序数组中的单一元素](https://leetcode-cn.com/problems/single-element-in-a-sorted-array/)
 
 ![540](image/算法随笔/1649403033721.png)
 
@@ -1609,7 +1560,7 @@ sort(a.begin(),b.end(), [](vector<int>& a , vector<int>& b){
  - 满足条件A-->在中间点右边查找；不满足条件A-->在中间点左边查找
 
 
-### [81. 搜索旋转排序数组 II](https://leetcode-cn.com/problems/search-in-rotated-sorted-array-ii/)
+## [81. 搜索旋转排序数组 II](https://leetcode-cn.com/problems/search-in-rotated-sorted-array-ii/)
 
 ![81](image/算法随笔/1649409026972.png)
 
@@ -1617,7 +1568,7 @@ sort(a.begin(),b.end(), [](vector<int>& a , vector<int>& b){
 
 **条件A**：`nums[mid] <= nums[right]`表明右段数据非递减有序；反之则左段数据非递减有序。**在此基础上**将$target$与$nums[mid]$和$nums[right]$比较即可得到下一步查找的数据段范围。
 
-### [719.找出第K小的对数距离](https://leetcode.cn/problems/find-k-th-smallest-pair-distance/)
+## [719.找出第K小的对数距离](https://leetcode.cn/problems/find-k-th-smallest-pair-distance/)
 
 
 **特殊处理**：
@@ -1657,12 +1608,12 @@ public:
 ```
 
 
-## 十二、 动态规划专题
+# 十二、 动态规划专题
 
 
-### 0-1背包问题
+## 0-1背包问题
 
-#### 物品只有**一个维度**的重量属性
+### 物品只有**一个维度**的重量属性
 
 [416.分割子集](https://leetcode-cn.com/problems/partition-equal-subset-sum/)
 
@@ -1699,7 +1650,7 @@ public:
 };
 ```
 
-#### 物品包含**多个维度**的重量属性
+### 物品包含**多个维度**的重量属性
 
  [474.一和零](https://leetcode-cn.com/problems/ones-and-zeroes/)
 
@@ -1735,9 +1686,9 @@ public:
 };
 ```
 
-### 完全背包问题
+## 完全背包问题
 
-### 字符串序列DP问题
+## 字符串序列DP问题
 
 **[650.只有两个键的键盘](https://leetcode.cn/problems/2-keys-keyboard/submissions/)**
 
@@ -1774,17 +1725,17 @@ public:
 };
 ```
 
-## 十三、 蓄水池抽样算法
+# 十三、 蓄水池抽样算法
 
 大数据工程师
 
-### 适用场景
+## 适用场景
 
 数据量 ==N== 很大（远超内存空间），需要**一次遍历**（时间复杂度o(N)）之后直接得到 ==k== 个随机抽取的数据。
 
 使得**在没有获得全部数据之前**每个数据被抽中的概率随着输入数据的增多，保持相同的被抽中概率。
 
-### 伪代码描述
+## 伪代码描述
 
 ```c++
 //Init : a reservoir with the size = k
@@ -1807,7 +1758,7 @@ for(int i = k ; i < N ; ++i)
 }
 ```
 
-### 概念证明
+## 概念证明
 
 证明该算法使得**在没有获得全部数据之前**每个数据被抽中的概率随着输入数据的增多，保持相同的被抽中概率。
 
@@ -1821,9 +1772,9 @@ $ 选择第i+1个数据时第i个数据不被替换出去概率 = 未选中第i+
 
 $\frac{k}{i} \times (1 - \frac{k}{i+1}) + \frac{k}{i} \times (\frac{k}{i+1} \times (1 - \frac{1}{k})) = \frac{k}{i+1}$
 
-## 十四、 字符串问题
+# 十四、 字符串问题
 
-### KMP字符串匹配算法
+## KMP字符串匹配算法
 
 **STEP 1. 生成模式串P的next[]数组**
 
@@ -1859,7 +1810,7 @@ bool checkString(int& s_len, int& p_len) {
 }
 ```
 
-### 连续字符子串问题
+## 连续字符子串问题
 
 求 **==连续==字符子串**问题时可以使用**滑动窗口**或者**双指针**两个技巧求解，在遍历字符序列的过程中用**哈希表**来存储、记录，每个字符or字符串的**出现次数**。
 
@@ -1982,7 +1933,7 @@ public:
 
 # 写题时遇到的一些细节问题
 
-## DFS遍历局部变量的设置
+# DFS遍历局部变量的设置
 
 每层的变量应当设置在DFS方法内部，**不可以在DFS方法外初始化**，因为编译器会优化代码，将后续多个DFS展开为 ==并行运算==
 
