@@ -1931,6 +1931,85 @@ public:
 ```
 
 
+# 十五。 树的Morris中序遍历算法
+
+## 算法特征
+
+使用$o(n)$的时间复杂度和o(1)的**空间复杂度**对树完成遍历。
+
+利用了树节点中大量的**空孩子指针**来指示当前遍历模式的**前驱节点**，并在使用后 ==将原来的空指针恢复，保证树不变==。
+
+## 算法语言描述
+
+对于当前的节点root，若root非空则进行以下操作：
+
+1. 若root->left为空，则root = root->right；
+
+2. 若root->left非空：
+
+    设root左子树中 **最右侧** 节点为mostRi，如果
+    
+    1. mostRi->right为空，则将mostRi的右孩子指针指向root（找到直接前驱），并令root = root->left；
+
+    2. mostRi->right非空，则此时**右孩子节点一定指向root**，先**进行遍历操作**，之后将root = root->right（回到当前节点的直接后继），并将mostRi右孩子节点还原为NULL；
+
+
+## 算法应用
+
+[剑指offer II.054  树节点中大于等于当前节点值的和](https://leetcode-cn.com/problems/w6cpku/)
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+private:
+    TreeNode* findNext(TreeNode* root) {
+        TreeNode* succ = root->right;
+        while(succ != NULL && succ->left != NULL && succ->left != root) {
+            succ = succ->left;
+        }
+        return succ;
+    }
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        TreeNode* ret = root;
+        int sum = 0;
+        while(ret != NULL) {
+            if(ret->right == NULL) {
+                sum += ret->val;
+                ret->val = sum;
+                ret = ret->left;
+            }else {
+                TreeNode* succ = findNext(ret);
+                if(succ->left == NULL) {
+                    succ->left = ret;
+                    ret = ret->right;
+                }else {
+                    succ->left = NULL;
+                    sum += ret->val;
+                    ret->val = sum;
+                    ret = ret->left;
+                }
+            }
+        }
+
+        return root;
+        
+    }
+};
+```
+
+
+
 # 写题时遇到的一些细节问题
 
 # DFS遍历局部变量的设置
