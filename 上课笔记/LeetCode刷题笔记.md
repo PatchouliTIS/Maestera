@@ -1,4 +1,4 @@
-# 一、 区间和问题：前缀和，树状数组与线段树
+# 一。 区间和问题：前缀和，树状数组与线段树
 
 ## 前缀和问题
 
@@ -171,7 +171,7 @@ public:
 
   ![lowbit元素](image/算法随笔/1649047584808.png)
 
-- 更新、插入元素
+- 更新。插入元素
     ![插入元素](image/算法随笔/1649047462036.png)
 
     使用lowbit累加，得到sum中的下标$idx$，也就是 ==**得到nums[]数组中对应的元素应该存放在sum[]数组中的什么位置**==
@@ -416,9 +416,11 @@ public:
 };
 ```
 
-# 二、 最长递增子序列
+# 二。 连续子序列问题
 
-## 300.最长递增子序列
+## 普通数组子序列问题
+
+### [300.最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
 
 ```c++
 //动态规划可解
@@ -447,7 +449,7 @@ public:
 };
 ```
 
-## 368.  最大整除子集
+### [368.  最大整除子集](https://leetcode.cn/problems/largest-divisible-subset/)
 
 ```c++
 class Solution {
@@ -485,9 +487,79 @@ public:
         return op;
     }
 };
+
 ```
 
-# 三、 图的遍历算法（DFS、BFS）
+
+## 循环数组子序列问题
+
+### [918.环形数组子序列最大和](https://leetcode.cn/problems/maximum-sum-circular-subarray/)
+
+![1656491173740](image/LeetCode刷题笔记/1656491173740.png)
+
+**思路**：
+
+将问题分成两部分：
+
+1. 数组作为普通数组时求最大连续子数组和；
+2. 收尾相连时作为循环数组求最大和，此时问题可以转换为**求数组的最小连续子数组之和**，之后用该数组所有元素的和sum减去最小和min即可
+
+![两种情况示意图](image/figure.png)
+
+```Java
+class Solution {
+    private int max;
+    private int min;
+    private int[] sum;
+    private int size;
+    public int maxSubarraySumCircular(int[] nums) {
+        size = (int)nums.length;
+        sum = new int[size + 1];
+        max = 0;
+        min = 0;
+
+
+        for(int i = 1; i <= size; ++i) {
+            sum[i] = sum[i - 1] + nums[i - 1];
+        }
+
+        int cur_max = 0;
+        int cur_min = 0;
+
+        for(int i = 0; i < size; ++i) {
+            if(cur_max + nums[i] > 0) {
+                cur_max += nums[i];
+                max = cur_max > max ? cur_max : max;
+            }else cur_max = 0;
+
+
+            if(cur_min + nums[i] < 0) {
+                cur_min += nums[i];
+                min = cur_min < min ? cur_min : min;
+            }else {
+                cur_min = 0;
+            }
+        }
+
+        //System.out.println("max:" + max + "\tmin:" + min + "\tsum:" + sum[size]);
+        if(sum[size] - min == 0 && max == 0) {
+            int ans = -400005;
+            for(int i = 0; i < size; ++i) {
+                if(nums[i] > ans) {
+                    ans = nums[i];
+                }
+            }
+            return ans;
+        }
+
+        return sum[size] - min > max ? sum[size] - min : max;
+    }
+}
+```
+
+
+
+# 三。 图的遍历算法（DFS。BFS）
 
 ## [417.大西洋太平洋水流问题](https://leetcode-cn.com/problems/pacific-atlantic-water-flow/)
 
@@ -1060,12 +1132,12 @@ public:
 };
 ```
 
-# 四、 单调栈
+# 四。 单调栈
 
 ## 特点
 
 1. 要求保持原来数据的**相对位置**;
-2. 要求数据按照**非递增、非递减**等一定顺序排列
+2. 要求数据按照**非递增。非递减**等一定顺序排列
 
 ## [单调栈军训题](https://leetcode-cn.com/problems/remove-duplicate-letters/solution/yi-zhao-chi-bian-li-kou-si-dao-ti-ma-ma-zai-ye-b-4/)
 
@@ -1197,7 +1269,7 @@ public:
 };
 ```
 
-# 五、 桶排序
+# 五。 桶排序
 
 ## 220. 存在重复元素III
 
@@ -1282,7 +1354,7 @@ public:
 };
 ```
 
-# 六、 巧用哈希表
+# 六。 巧用哈希表
 
 ## 1711. 大餐计数
 
@@ -1331,7 +1403,7 @@ public:
 
 - 科学记数法定义出来的变量默认是double类型，而int和double无法做乘除运算。
 
-# 七、 双指针
+# 七。 双指针
 
 适用于处理**顺序数组**的情况。
 
@@ -1387,7 +1459,7 @@ public:
 
 **注意---->** 指针遍历时左右指针同时向中间靠拢，当遍历到合适的结果时**不要直接break** ，必须将当前顺序序列全部遍历完成。
 
-# 八、 常数空间层次遍历
+# 八。 常数空间层次遍历
 
 ## 117. 填充每个节点的下一个节点
 
@@ -1449,7 +1521,7 @@ public:
 };
 ```
 
-# 九、位运算专题
+# 九。位运算专题
 
 ## 算法
 
@@ -1515,7 +1587,7 @@ public:
 };
 ```
 
-# 十、 贪心算法
+# 十。 贪心算法
 
 ## 特征
 
@@ -1542,7 +1614,7 @@ sort(a.begin(),b.end(), [](vector<int>& a , vector<int>& b){
 ```
    
 
-# 十一、 二分查找算法
+# 十一。 二分查找算法
 
 ## 特征
 
@@ -1608,7 +1680,7 @@ public:
 ```
 
 
-# 十二、 动态规划专题
+# 十二。 动态规划专题
 
 
 ## 0-1背包问题
@@ -1725,7 +1797,7 @@ public:
 };
 ```
 
-# 十三、 蓄水池抽样算法
+# 十三。 蓄水池抽样算法
 
 大数据工程师
 
@@ -1772,7 +1844,7 @@ $ 选择第i+1个数据时第i个数据不被替换出去概率 = 未选中第i+
 
 $\frac{k}{i} \times (1 - \frac{k}{i+1}) + \frac{k}{i} \times (\frac{k}{i+1} \times (1 - \frac{1}{k})) = \frac{k}{i+1}$
 
-# 十四、 字符串问题
+# 十四。 字符串问题
 
 ## KMP字符串匹配算法
 
@@ -1812,7 +1884,7 @@ bool checkString(int& s_len, int& p_len) {
 
 ## 连续字符子串问题
 
-求 **==连续==字符子串**问题时可以使用**滑动窗口**或者**双指针**两个技巧求解，在遍历字符序列的过程中用**哈希表**来存储、记录，每个字符or字符串的**出现次数**。
+求 **==连续==字符子串**问题时可以使用**滑动窗口**或者**双指针**两个技巧求解，在遍历字符序列的过程中用**哈希表**来存储。记录，每个字符or字符串的**出现次数**。
 
 [438.找到字符串中所有字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/)
 
