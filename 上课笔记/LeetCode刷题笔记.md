@@ -345,6 +345,170 @@ public:
 
 ## 线段树
 
+### [729.我的日程安排I](https://leetcode.cn/problems/my-calendar-i/)
+
+![1656953179389](image/LeetCode刷题笔记/1656953179389.png)
+
+```c++
+class MyCalendar {
+private:
+    unordered_map<int, int> tree;
+    unordered_map<int, int> lazy;
+    const int UP = 1e9 + 2;
+
+    void pushdown(int len, int node) {
+        if(lazy[node] != 0) {
+            int le_node = node << 1;
+            int ri_node = node << 1 | 1;
+            lazy[le_node] = lazy[node];
+            lazy[ri_node] = lazy[node];
+            tree[le_node] = len - len / 2;
+            tree[ri_node] = len / 2;
+            lazy[node] = 0;
+        }
+    }
+
+
+    void update(const int& start, const int& end, int L, int R, int node) {
+        if(L >= start && R <= end) {
+            lazy[node] = 1;
+            tree[node] = R - L + 1;
+            return;
+        }
+        int len = R - L + 1;
+        pushdown(len, node);
+        int mid = (L + R) >> 1;
+        int le_node = node << 1;
+        int ri_node = node << 1 | 1;
+
+        if(start <= mid) {
+            update(start, end, L, mid, le_node);
+        }
+        if(mid < end) {
+            update(start, end, mid + 1, R, ri_node);
+        }
+
+        //pushup
+        tree[node] = tree[le_node] + tree[ri_node];
+    }
+
+    bool query(const int& start, const int& end, int L, int R, int node) {
+        if(L >= start && R <= end) {
+            if(tree[node] != 0) {
+                return false;
+            }else {
+                return true;
+            }
+        }
+        int len = R - L + 1;
+        pushdown(len, node);
+        int mid = (L + R) >> 1;
+        int le_node = node << 1;
+        int ri_node = node << 1 | 1;
+
+        bool tmp = true;
+
+        if(start <= mid) {
+            tmp = tmp && query(start, end, L, mid, le_node);
+        }
+        if(mid < end) {
+            tmp = tmp && query(start, end, mid + 1, R, ri_node);
+        }
+
+        //pushup
+        //不需要向上传递左右子节点的数值，因为并不清楚start与end是否与左右节点有交集
+        //tree[node] = tree[le_node] + tree[ri_node];
+
+        return tmp;
+    }
+
+public:
+    MyCalendar() {
+
+    }
+    
+    bool book(int start, int end) {
+        if(query(start, end - 1, 0, UP, 1)) {
+            update(start, end - 1, 0, UP, 1);
+            return true;
+        }else {
+            return false;
+        }
+    }
+};
+
+/**
+ * Your MyCalendar object will be instantiated and called as such:
+ * MyCalendar* obj = new MyCalendar();
+ * bool param_1 = obj->book(start,end);
+ */
+```
+
+**注意事项：**
+1. C++使用unordered_map模拟线段树的节点**如果数据量过高**（超过$10^5$）会出现TLE，除非预估线段树节点个数然后直接new一个大数组。
+2. 建议使用Java动态开点。
+
+JAVA动态开点算法：
+```java
+class MyCalendar {
+    class Node {
+        // ls 和 rs 分别代表当前节点的左右子节点在 tr 的下标
+        // val 代表当前节点有多少数
+        // add 为懒标记
+        int ls, rs, add, val;
+    }
+    int N = (int)1e9, M = 120010, cnt = 1;
+    Node[] tr = new Node[M];
+    void update(int u, int lc, int rc, int l, int r, int v) {
+        if (l <= lc && rc <= r) {
+            tr[u].val += (rc - lc + 1) * v;
+            tr[u].add += v;
+            return ;
+        }
+        lazyCreate(u);
+        pushdown(u, rc - lc + 1);
+        int mid = lc + rc >> 1;
+        if (l <= mid) update(tr[u].ls, lc, mid, l, r, v);
+        if (r > mid) update(tr[u].rs, mid + 1, rc, l, r, v);
+        pushup(u);
+    }
+    int query(int u, int lc, int rc, int l, int r) {
+        if (l <= lc && rc <= r) return tr[u].val;
+        lazyCreate(u);
+        pushdown(u, rc - lc + 1);
+        int mid = lc + rc >> 1, ans = 0;
+        if (l <= mid) ans = query(tr[u].ls, lc, mid, l, r);
+        if (r > mid) ans += query(tr[u].rs, mid + 1, rc, l, r);
+        return ans;
+    }
+    void lazyCreate(int u) {
+        if (tr[u] == null) tr[u] = new Node();
+        if (tr[u].ls == 0) {
+            tr[u].ls = ++cnt;
+            tr[tr[u].ls] = new Node();
+        }
+        if (tr[u].rs == 0) {
+            tr[u].rs = ++cnt;
+            tr[tr[u].rs] = new Node();
+        }
+    }
+    void pushdown(int u, int len) {
+        tr[tr[u].ls].add += tr[u].add; tr[tr[u].rs].add += tr[u].add;
+        tr[tr[u].ls].val += (len - len / 2) * tr[u].add; tr[tr[u].rs].val += len / 2 * tr[u].add;
+        tr[u].add = 0;
+    }
+    void pushup(int u) {
+        tr[u].val = tr[tr[u].ls].val + tr[tr[u].rs].val;
+    }
+    public boolean book(int start, int end) {
+        if (query(1, 1, N + 1, start + 1, end) > 0) return false;
+        update(1, 1, N + 1, start + 1, end, 1);
+        return true;
+    }
+}
+
+```
+
 ## 珂朵莉数(Old-Driver Tree)
 
 ```c++
