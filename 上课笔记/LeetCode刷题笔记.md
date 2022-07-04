@@ -2081,6 +2081,46 @@ public:
 ```
 
 
+# 十六。 动态规划专题
+
+## 字符串匹配DP解决
+
+[392.判断子序列](https://leetcode.cn/problems/is-subsequence/submissions/)
+
+![1656901488061](image/LeetCode刷题笔记/1656901488061.png)
+
+**DP思路：**
+![1656901512384](image/LeetCode刷题笔记/1656901512384.png)
+
+```c++
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        int n = (int)s.length();
+        int m = (int)t.length();
+        vector<vector<int>> dp(m + 1, vector<int>(26, m));
+
+        for(int i = m - 1; i >= 0; --i) {
+            for(int j = 0; j < 26; ++j) {
+                if(t[i] == (char)(j + 'a')) {
+                    dp[i][j] = i;
+                }else {
+                    dp[i][j] = dp[i + 1][j];
+                }
+            }
+        }
+
+        int ptr = 0;
+        for(auto& c : s) {
+            if(dp[ptr][c - 'a'] == m) return false;
+            ptr = dp[ptr][c - 'a'] + 1;
+        }
+        return true;
+    }
+};
+```
+
+
 
 # 写题时遇到的一些细节问题
 
