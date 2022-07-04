@@ -2100,6 +2100,8 @@ public:
         int m = (int)t.length();
         vector<vector<int>> dp(m + 1, vector<int>(26, m));
 
+
+        //从后向前遍历，确定从位置i开始，字符j在i之后第一次出现的下标
         for(int i = m - 1; i >= 0; --i) {
             for(int j = 0; j < 26; ++j) {
                 if(t[i] == (char)(j + 'a')) {
