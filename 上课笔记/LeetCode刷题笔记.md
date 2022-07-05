@@ -511,6 +511,61 @@ class MyCalendar {
 
 ## 珂朵莉数(Old-Driver Tree)
 
+### [剑指offer II 074.合并区间](https://leetcode.cn/problems/SsGoHC/)
+
+![1656996541132](image/LeetCode刷题笔记/1656996541132.png)
+
+```c++
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        //二分法查找大于当前遍历区间左端点的已存在区间的最小右端点。
+        map<int, int> status;
+        vector<vector<int>> ans;
+        int size = intervals.size();
+        for(int i = 0 ; i < size; ++i) {
+            if(status.empty()) {
+                status[intervals[i][1]] = intervals[i][0];
+            }else {
+                //统计当前合并区间的最大左右端点范围
+                int front = intervals[i][0];
+                int back = intervals[i][1];
+                while(!status.empty()) {
+                    auto it = status.lower_bound(intervals[i][0]);
+                    if(it != status.end()) {
+                        if(it->second <= intervals[i][1]) {
+                            front = it->second < front ? it->second : front;
+                            back = it->first > back ? it->first : back;
+                            status.erase(it);
+                            if(status.empty()) {
+                                status[back] = front;
+                                break;
+                            }
+                        }else {
+                            status[back] = front;
+                            break;
+                        }
+                    }else {
+                        status[back] = front;
+                        break;
+                    }
+                }
+
+            }
+        }
+        for(auto& [back, front] : status) {
+            ans.push_back(vector<int>{front, back});
+        }
+
+        return ans;
+    }
+};
+```
+
+### [715. Range模块](https://leetcode.cn/problems/range-module/)
+
+**注意：**此题使用C++动态开点会出现==Time Limit Exceeded==，推荐使用Java。
+
 ```c++
 class RangeModule {
 private:
