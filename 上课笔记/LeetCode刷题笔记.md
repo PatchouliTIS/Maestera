@@ -2105,7 +2105,7 @@ bool checkString(int& s_len, int& p_len) {
 
 求 **==连续==字符子串**问题时可以使用**滑动窗口**或者**双指针**两个技巧求解，在遍历字符序列的过程中用**哈希表**来存储。记录，每个字符or字符串的**出现次数**。
 
-[438.找到字符串中所有字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/)
+### [438.找到字符串中所有字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/)
 
 使用**双指针**依次遍历
 
@@ -2159,7 +2159,7 @@ public:
 ```
 
 
-[30. 串联所有单词的子串](https://leetcode.cn/problems/substring-with-concatenation-of-all-words/)
+### [30. 串联所有单词的子串](https://leetcode.cn/problems/substring-with-concatenation-of-all-words/)
 
 使用**滑动窗口**方法：
 ```c++
@@ -2219,6 +2219,87 @@ public:
         return ans;
     }
 };
+```
+
+##  Trie树（字典树）
+
+**字典树简介：** 树形结构，其中根节点不存储任何数据，其任意非根节点包括==数据域==和==指针域==两个部分，==数据域==指示以当前元素为查找序列的末尾元素的序列内容（或者全部序列个数）；==指针域==指向下一个元素节点。
+
+**典型应用：** 典型应用是用于统计和排序大量的字符串（但不仅限于字符串），所以经常被**搜索引擎**系统用于**文本词频统计**。它的优点是最大限度地减少无谓的字符串比较，查询效率比较高。
+
+![1657004322234](image/LeetCode刷题笔记/1657004322234.png)
+
+### Trie树模板
+
+```c++
+//1. define the node of TrieTREE
+class Trie {
+private:
+    typedef struct node {
+        int cnt;
+        struct node *next[26];      //pointer to next char;
+        node() {cnt = 0; memset(next, 0, sizeof(next));};
+    }NODE;
+
+    NODE *root;
+    
+public:
+    Trie() {
+        root = new NODE();
+    }
+    
+    void insert(string word) {
+        NODE *ptr = root;
+        for(auto& c : word) {
+            if(ptr->next[c - 'a'] == NULL) {
+                NODE *cur = new NODE();
+                ptr->next[c - 'a'] = cur;
+                ptr = cur;
+            }else {
+                ptr = ptr->next[c - 'a'];
+            }
+        }
+        ptr->cnt++;
+    }
+    
+    bool search(string word) {
+        NODE *ptr = root;
+        for(auto& c : word) {
+            if(ptr->next[c - 'a'] == NULL) return false;
+            else {
+                ptr = ptr->next[c - 'a'];
+            }
+        }
+
+        if(ptr->cnt == 0) return false;
+        else return true;
+    }
+    
+    bool startsWith(string prefix) {
+        NODE *ptr = root;
+        for(auto& c : prefix) {
+            if(ptr->next[c - 'a'] == NULL) return false;
+            else {
+                ptr = ptr->next[c - 'a'];
+            }
+        }
+
+
+        if(ptr->cnt != 0) return true;
+        for(int i = 0; i < 26; ++i) {
+            if(ptr->next[i] != NULL) return true;
+        }
+        return false;
+    }
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
 ```
 
 
