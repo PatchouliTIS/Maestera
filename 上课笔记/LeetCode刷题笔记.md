@@ -1902,6 +1902,107 @@ public:
 # 十二。 动态规划专题
 
 
+## 逆推思维
+
+### 将暴力遍历的思路反转，作为DP数组的元素
+
+[873.最长斐波那契子序列长度](https://leetcode.cn/problems/length-of-longest-fibonacci-subsequence/)
+
+![1657299418202](image/LeetCode刷题笔记/1657299418202.png)
+
+**双指针遍历 + 二分查找**
+
+通过**初始的两个数**就能确定一个斐波那契数列，因此暴力枚举每一个数arr[i]和arr[j]，扫描遍历==以该两数为首部元素所构成的斐波那契数列长度==
+
+```c++
+class Solution {
+public:
+    int lenLongestFibSubseq(vector<int>& arr) {
+        int size = arr.size();
+        int pre = 0;
+        int cur = 0;
+        int next_idx = 0;
+        int ans = 2;
+        int cur_len = 2;
+
+        for(int i = 0; i < size - 2; ++i) {
+            for(int j = i + 1; j < size - 1; ++j) {
+                pre = arr[i];
+                cur = arr[j];
+                cur_len = 2;
+                next_idx = -1;
+
+                while(next_idx < size) {
+                    next_idx = lower_bound(arr.begin() + j + 1, arr.end(), pre + cur) - arr.begin();
+                    //cout<<"ne_idx:"<<next_idx<<"\tpre:"<<pre<<"\tcur"<<cur<<"\t";
+                    if(next_idx == size) {
+                        //cout<<"out1";
+                        break;
+                    }
+                    else {
+                        if(arr[next_idx] == pre + cur) {
+                            //cout<<"bingo\t";
+                            pre = cur;
+                            cur = arr[next_idx];
+                            cur_len++;
+                        }else {
+                            //cout<<"out2";
+                            break;
+                        }
+                    }
+                }
+                //cout<<endl;
+                //cout<<"cur_len:"<<cur_len<<endl;
+                ans = ans < cur_len ? cur_len : ans;
+
+            }
+        }
+
+        return ans == 2 ? 0 : ans;
+    }
+};
+```
+
+**二维DP数组逆推求解**
+
+定义二维数组 dp 表示以==每个**下标对**的元素作为最后两个数字的斐波那契子序列的最大长度==。当 i > j 时，dp[j][i] 表示以 arr[j] 和 arr[i] 作为**最后两个数字**的斐波那契子序列的最大长度。初始时$\textit{dp}$中的所有值都是 0。
+
+状态转移方程如下：
+
+![1657299814963](image/LeetCode刷题笔记/1657299814963.png)
+
+```c++
+class Solution {
+public:
+    int lenLongestFibSubseq(vector<int>& arr) {
+        unordered_map<int, int> mp;
+
+        int size = (int)arr.size();
+        for(int i = 0; i < size; ++i) {
+            mp[arr[i]] = i;
+        }
+
+        int ans = 0;
+
+        vector<vector<int>> dp(size, vector<int>(size, 0));
+
+        for(int i = 2 ; i < size; ++i) {
+            for(int j = i - 1; j > 0 && arr[j] * 2 > arr[i]; --j) {
+                int pre = arr[i] - arr[j];
+                if(mp.find(pre) == mp.end()) continue;
+                else {
+                    dp[i][j] = 3 > (dp[j][mp[pre]] + 1) ? 3 : (dp[j][mp[pre]] + 1);
+                    //cout<<"curI:"<<i<<"\t\tcurJ:"<<j<<"\t\tpre:"<<pre<<"\t\tdp:"dp[i][j]<<"\t\tdp_pre:"<<dp[j][mp[pre]];
+                    ans = dp[i][j] > ans ? dp[i][j] : ans;
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
+
 ## 0-1背包问题
 
 ### 物品只有**一个维度**的重量属性
