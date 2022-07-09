@@ -2404,6 +2404,107 @@ public:
 ```
 
 
+### Trie树应用
+
+[剑指offer II 067.最大的异或](https://leetcode.cn/problems/ms70jA/)
+
+![1657336284242](image/LeetCode刷题笔记/1657336284242.png)
+
+**思路：**
+
+将数字看成**二进制字符串**，整理成一个Trie树，其树高为int类型二进制位数（最高31位，树高最高也就是31）；树的分差只有两种（0或者1）。靠近树根的是数字的高位二进制，靠近叶节点的是数字的低位二进制。
+
+在整理好Trie树之后，依次顺序遍历原数组中的元素$a_i$，将$a_i$与Trie树做对比，取得最大值。
+
+时间复杂度为$o(32 \times n) + o(n)$。
+
+```c++
+class Solution {
+private:
+    typedef struct node {
+        bool isEnd;
+        int num;
+        struct node *next[2];
+        node() {isEnd = false; num = 0; memset(next, 0, sizeof next);};
+    }NODE;
+
+    NODE *root;
+
+    int upper = 0;
+public:
+    int findMaximumXOR(vector<int>& nums) {
+        root = new NODE();
+        int max = 0;
+        for(auto& n : nums) {
+            max = max < n ? n : max;
+        }
+
+
+        //为节省空间，只需要关注当前数列中的最大元素的最高二进制位即可。
+        while(max) {
+            upper++;
+            max = max >> 1;
+        }
+
+
+        NODE *ptr = root;
+        for(auto& n : nums) {
+            ptr = root;
+            for(int i = upper; i > 0; --i) {
+                int cur_side = n & (1 << (i - 1));
+                if(cur_side) {
+                    if(ptr->next[1] == NULL) {
+                        NODE *cur = new NODE();
+                        ptr->next[1] = cur;
+                        ptr = ptr->next[1];
+                    }else {
+                        ptr = ptr->next[1];
+                    }
+                } else {
+                    if(ptr->next[0] == NULL) {
+                        NODE *cur = new NODE();
+                        ptr->next[0] = cur;
+                        ptr = ptr->next[0];
+                    }else {
+                        ptr = ptr->next[0];
+                    }
+                }
+            }
+            ptr->isEnd = true;
+            ptr->num = n;
+        }
+
+        int ans = 0;
+
+        for(auto& n : nums) {
+            ptr = root;
+            for(int i = upper; i > 0; --i) {
+                int cur_bit = n & (1 << (i - 1));
+                if(cur_bit) {
+                    if(ptr->next[0] == NULL) {
+                        ptr = ptr->next[1];
+                    }else {
+                        ptr = ptr->next[0];
+                    }
+                }else {
+                    if(ptr->next[1] == NULL) {
+                        ptr = ptr->next[0];
+                    }else {
+                        ptr = ptr->next[1];
+                    }
+                }
+            }
+
+            ans = ans < (ptr->num ^ n) ? (ptr->num ^ n) : ans;
+        }
+
+
+        return ans;
+    }
+};
+```
+
+
 # 十五。 树的Morris中序遍历算法
 
 ## 算法特征
