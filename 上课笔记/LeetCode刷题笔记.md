@@ -509,6 +509,97 @@ class MyCalendar {
 
 ```
 
+
+C++预估点数动态开点算法：
+```c++
+class MyCalendarTwo {
+public:
+    static const int N = 100010;
+    int MAXN = 1e9;
+    int cnt=1;
+    class Node{
+    public:
+        int l,r;
+        int val,add;
+        Node(){
+            l=0;
+            r=0;
+            val=0;
+            add=0;
+        }
+    };
+    vector<Node*> t;
+
+    void eraseLazy(int p){
+        if(t[p]->add){
+            t[t[p]->l]->add += t[p]->add;
+            t[t[p]->r]->add += t[p]->add;
+            t[t[p]->l]->val += t[p]->add;
+            t[t[p]->r]->val += t[p]->add;
+            t[p]->add = 0;
+        }
+    }
+    // lc,rc是当前节点的左右范围,lt,rt是要修改的范围
+    void modify(int p, int lc,int rc,int lt, int rt,int k){
+        if(lt<=lc && rc<=rt){
+            t[p]->val += k;
+            t[p]->add += k;
+            return;
+        }
+        lazyCreate(p);
+        eraseLazy(p);
+        int mid = (lc+rc)>>1;
+        if(lt<=mid){
+            modify(t[p]->l, lc, mid,lt,rt, k);
+        }
+        if(rt>mid){
+            modify(t[p]->r, mid+1,rc, lt,rt, k);
+        }
+        t[p]->val = max(t[t[p]->l]->val , t[t[p]->r]->val);
+    }
+
+    void lazyCreate(int p){
+        if(t[p] == nullptr) t[p] = new Node();
+        if(t[p]->l==0){
+            t[p]->l = ++cnt;
+            t[t[p]->l] = new Node();
+        }
+        if(t[p]->r==0){
+            t[p]->r = ++cnt;
+            t[t[p]->r] = new Node();
+        }
+    }
+    // lc,rc是当前节点的左右范围,lt,rt是要查询的范围
+    int query(int p, int lc,int rc,int lt,int rt){
+        if(lt<=lc && rc<=rt){
+            return t[p]->val;
+        }
+        lazyCreate(p);
+        eraseLazy(p);
+        int ret=0;
+        int mid = (lc + rc)>>1;
+        if(lt<=mid){
+            ret = max(query(t[p]->l, lc,mid,lt,rt), ret);
+        }
+        if(rt>mid){
+            ret = max(query(t[p]->r, mid+1,rc,lt,rt), ret);
+        }
+        return ret;
+    }
+    MyCalendarTwo() {
+        t.resize(N,nullptr);
+    }
+    
+    bool book(int start, int end) {
+        int maxnum = query(1,1,MAXN,start+1, end);
+        if(maxnum>=2) return false;
+        modify(1,1,MAXN,start+1,end,1);
+        return true;
+    }
+};
+
+```
+
 ## 珂朵莉数(Old-Driver Tree)
 
 ### [剑指offer II 074.合并区间](https://leetcode.cn/problems/SsGoHC/)
