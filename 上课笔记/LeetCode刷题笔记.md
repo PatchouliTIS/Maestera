@@ -2413,6 +2413,118 @@ public:
 };
 ```
 
+### 连续子串中字符唯一（不出现重复字符）
+
+[3. 无重复字符的最小子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
+
+**思路：**
+==双指针==遍历，当右边指针遇到重复的字符时，**直接收缩左边指针，直到右边指针指向的字符不重复**，在这个过程中以**哈希表**的形式标记每个字符==是否已经出现过==（以bool数组的形式）。
+
+```c++
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        bool sa[128];
+        
+        memset(sa, false, sizeof sa);
+        
+        int i = 0;
+        int j = 0;
+        int ans = 0;
+        
+        while(j < (int)s.length()) {
+            if(sa[s[j]] == false) {
+                sa[s[j]] = true;
+                j++;
+            }else {
+                //遇到重复则直接收缩指针i
+                //收缩前先统计字符串长度
+                ans = ans < j - i ? j - i : ans;
+                while(i <= j && sa[s[j]] == true) {
+                    sa[s[i]] = false;
+                    i++;
+                }
+                sa[s[j]] = true;
+                j++;
+            }
+        }
+        
+        ans = ans < j - i ? j - i : ans;
+        
+        return ans;
+    }
+};
+```
+
+### 连续子串中包含重复的字符
+
+[76. 最小覆盖子串](https://leetcode.cn/submissions/detail/338774603/)
+
+**思路：**
+以**哈希表**的形式标记每个字符==出现的次数==（以int数组的形式），同时==双指针==遍历，右指针统计字符串s中各个字符出现的次数，如果当前字符的==出现次数大于比较字符串t中的字符个数==时，**不收缩左指针**而是继续向后遍历记录s中的字符个数。当左右指针包含的子串中**完全包含字符串t中的所有字符时**再收缩左指针到最小子区间。
+
+```c++
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        int slen = s.length();
+        int tlen = t.length();
+        //cnt统计i--j区间内包含字符串t中字符的个数
+        int cnt = tlen;
+        
+        string ans = "";
+        
+        if(tlen > slen) return "";
+        
+        int sa[128];
+        int ta[128];
+        memset(sa, 0, 128 * sizeof(int));
+        memset(ta, 0, 128 * sizeof(int));
+        
+        for(auto& c : t) {
+            ta[c]++;
+        }
+        
+        
+        int i = 0;
+        int j = 0;
+        
+        while(j < slen) {
+            sa[s[j]]++;
+            
+            
+            if(ta[s[j]] != 0 && sa[s[j]] <= ta[s[j]]) cnt--;
+            
+            j++;
+            
+
+            //当全部包含字符串t时，指针i右移缩小区间
+            if(cnt == 0) {
+                while(i <= j && cnt == 0) {
+                    sa[s[i]]--;
+                    if(sa[s[i]] < ta[s[i]]) cnt++;
+                    i++;
+                }
+                string tmp = s.substr(i - 1, j - i + 1);
+                if(ans.empty()) ans = tmp;
+                else ans = (int)ans.length() > (int)tmp.length() ? tmp : ans;
+            }
+            
+            while(i <= j && ta[s[i]] == 0) {
+                sa[s[i]]--;
+                i++;
+            }
+            
+        }
+        
+        return ans;
+        
+    }
+};
+```
+
+
+
 ##  Trie树（字典树）
 
 **字典树简介：** 树形结构，其中根节点不存储任何数据，其任意非根节点包括==数据域==和==指针域==两个部分，==数据域==指示以当前元素为查找序列的末尾元素的序列内容（或者全部序列个数）；==指针域==指向下一个元素节点。
@@ -2594,6 +2706,9 @@ public:
     }
 };
 ```
+
+
+## 
 
 
 # 十五。 树的Morris中序遍历算法
