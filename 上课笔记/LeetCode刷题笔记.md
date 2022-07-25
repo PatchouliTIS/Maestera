@@ -1713,6 +1713,59 @@ public:
 
 - 科学记数法定义出来的变量默认是double类型，而int和double无法做乘除运算。
 
+
+## [128. 最长连续序列](https://leetcode.cn/problems/longest-consecutive-sequence/)
+
+### 题目特征
+
+1. 初始数组元素乱序，使用排序可以很好求解。
+2. 但是要求只有o(n)的时间复杂度，靠最优解的排序算法行不通。
+3. 此时先预处理数组，将数组中元素存放在hash表中。
+4. 再依次便利查找连续的元素，每确定一轮连续元素就将其从hash表中删除。
+
+### 代码示例
+
+```C++
+class Solution {
+private:
+    unordered_set<int> st;
+    int ans;
+public:
+    int longestConsecutive(vector<int>& nums) {
+        ans = 0;
+        
+        for(auto& n : nums) {
+            st.insert(n);
+        }
+        
+        for(int i = 0 ; i < (int)nums.size(); ++i) {
+            if(st.count(nums[i]) == 0) continue;
+            
+            int le = nums[i] - 1;
+            int ri = nums[i] + 1;
+            
+            while(st.count(le) != 0) {
+                st.erase(le);
+                le--;
+                
+            }
+            
+            while(st.count(ri) != 0) {
+                st.erase(ri);
+                ri++;
+                
+            }
+            
+            ans = ans < ri - le - 1 ? ri - le - 1 : ans;
+            
+            st.erase(nums[i]);
+            
+        }
+        return ans;
+    }
+};
+```
+
 # 七。 双指针
 
 适用于处理**顺序数组**的情况。
@@ -2204,6 +2257,43 @@ public:
             }
         }
         return dp[n];
+    }
+};
+```
+
+[392.判断子序列](https://leetcode.cn/problems/is-subsequence/submissions/)
+
+![1656901488061](image/LeetCode刷题笔记/1656901488061.png)
+
+**DP思路：**
+![1656901512384](image/LeetCode刷题笔记/1656901512384.png)
+
+```c++
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        int n = (int)s.length();
+        int m = (int)t.length();
+        vector<vector<int>> dp(m + 1, vector<int>(26, m));
+
+
+        //从后向前遍历，确定从位置i开始，字符j在i之后第一次出现的下标
+        for(int i = m - 1; i >= 0; --i) {
+            for(int j = 0; j < 26; ++j) {
+                if(t[i] == (char)(j + 'a')) {
+                    dp[i][j] = i;
+                }else {
+                    dp[i][j] = dp[i + 1][j];
+                }
+            }
+        }
+
+        int ptr = 0;
+        for(auto& c : s) {
+            if(dp[ptr][c - 'a'] == m) return false;
+            ptr = dp[ptr][c - 'a'] + 1;
+        }
+        return true;
     }
 };
 ```
@@ -2787,49 +2877,51 @@ public:
     }
 };
 ```
+# 十六。  并查集 UnionFindSet
 
+## 并查集的模板
 
-# 十六。 动态规划专题
-
-## 字符串匹配DP解决
-
-[392.判断子序列](https://leetcode.cn/problems/is-subsequence/submissions/)
-
-![1656901488061](image/LeetCode刷题笔记/1656901488061.png)
-
-**DP思路：**
-![1656901512384](image/LeetCode刷题笔记/1656901512384.png)
-
-```c++
-class Solution {
+```C++
+class UFSet {  
 public:
-    bool isSubsequence(string s, string t) {
-        int n = (int)s.length();
-        int m = (int)t.length();
-        vector<vector<int>> dp(m + 1, vector<int>(26, m));
-
-
-        //从后向前遍历，确定从位置i开始，字符j在i之后第一次出现的下标
-        for(int i = m - 1; i >= 0; --i) {
-            for(int j = 0; j < 26; ++j) {
-                if(t[i] == (char)(j + 'a')) {
-                    dp[i][j] = i;
-                }else {
-                    dp[i][j] = dp[i + 1][j];
-                }
-            }
-        }
-
-        int ptr = 0;
-        for(auto& c : s) {
-            if(dp[ptr][c - 'a'] == m) return false;
-            ptr = dp[ptr][c - 'a'] + 1;
-        }
-        return true;
+    int status[205];
+    //如果点集过于稀疏，还可以用unordered_map来模拟点的标记数组
+    int height[205];
+    UFSet() {
+        memset(status, -1, sizeof status);
+        memset(height, 0, sizeof height);
     }
-};
-```
 
+    int __find(int x) {
+        while(status[x] != -1) {
+            x = status[x];
+        }
+        return x;
+    }
+
+
+    void __union(int x, int y) {
+        //cout<<"cur_x:"<<x<<"\t\tcur_y:"<<y;
+
+        int x_head = __find(x);
+        int y_head = __find(y);
+
+        if(x_head == y_head) return;
+        
+        //优化方式：
+        //高度较小的点合并到高度较大的点。
+        if(height[x_head] > height[y_head]) {
+            status[y_head] = x_head;
+            height[x_head] = height[y_head] + 1 > height[x_head] ? height[y_head] + 1 : height[x_head];
+        }else {
+            status[x_head] = y_head;
+            height[y_head] = height[x_head] + 1 > height[y_head] ? height[x_head] + 1 : height[y_head];
+        }
+    }
+
+};
+
+```
 
 
 # 写题时遇到的一些细节问题
@@ -2842,6 +2934,6 @@ public:
 
 ## 有关链式结构的LeetCode报错
 
-### DEADLYSIGNAL
+### DEADLYSIGNAL 和 heap_use_after_free
 
 一般是因为题目要求原结构不允许更改，在提交时更改了原链式结构而没有复原，就会报错。
