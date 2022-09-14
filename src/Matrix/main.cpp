@@ -1,16 +1,13 @@
 #include "Matrix.h"
 
-int row;        //ÐÐ
-int clm;        //ÁÐ
+int row;        //åˆ—
+int clm;        //è¡Œ
 int main()
 {
     while(1)
     {
-        
+        break;
     }
-
-
-    
     system("pause");
     return 0;
 }
